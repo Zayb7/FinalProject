@@ -21,66 +21,6 @@ public class Board extends JPanel {
 	private Timer timer;
 	private boolean end;
 
-	public int getMovesMade() {
-		return movesMade;
-	}
-
-	public void setMovesMade(int movesMade) {
-		this.movesMade = movesMade;
-	}
-
-	public int getMaximum_moves() {
-		return maximum_moves;
-	}
-
-	public void setMaximum_moves(int maximum_moves) {
-		this.maximum_moves = maximum_moves;
-	}
-
-	public Timer getTimer() {
-		return timer;
-	}
-
-	public void setTimer(Timer timer) {
-		this.timer = timer;
-	}
-
-	public boolean isEnd() {
-		return end;
-	}
-
-	public void setEnd(boolean end) {
-		this.end = end;
-	}
-	
-	public static int getRows() {
-		return ROWS;
-	}
-
-	public static int getCols() {
-		return COLS;
-	}
-
-
-	public String getPlayerName() {
-		return playerName;
-	}
-
-	public void setPlayerName(String playerName) {
-		this.playerName = playerName;
-	}
-
-	public int getHighScore() {
-		return highScore;
-	}
-
-	public void setHighScore(int highScore) {
-		this.highScore = highScore;
-	}
-
-	public void setBubbleBoard(Bubble[][] bubbleBoard) {
-		this.bubbleBoard = bubbleBoard;
-	}
 
 	private String playerName;
 	private int highScore;
@@ -192,4 +132,65 @@ public class Board extends JPanel {
 	public void setBubble(Bubble aBubble) {
 
 	}
+	public int getMovesMade() {
+		return movesMade;
+	}
+
+	public void setMovesMade(int movesMade) {
+		this.movesMade = movesMade;
+	}
+
+	public int getMaximum_moves() {
+		return maximum_moves;
+	}
+
+	public void setMaximum_moves(int maximum_moves) {
+		this.maximum_moves = maximum_moves;
+	}
+
+	public Timer getTimer() {
+		return timer;
+	}
+
+	public void setTimer(Timer timer) {
+		this.timer = timer;
+	}
+
+	public boolean isEnd() {
+		return end;
+	}
+
+	public void setEnd(boolean end) {
+		this.end = end;
+	}
+	
+	public static int getRows() {
+		return ROWS;
+	}
+
+	public static int getCols() {
+		return COLS;
+	}
+
+
+	public String getPlayerName() {
+		return playerName;
+	}
+
+	public void setPlayerName(String playerName) {
+		this.playerName = playerName;
+	}
+
+	public int getHighScore() {
+		return highScore;
+	}
+
+	public void setHighScore(int highScore) {
+		this.highScore = highScore;
+	}
+
+	public void setBubbleBoard(Bubble[][] bubbleBoard) {
+		this.bubbleBoard = bubbleBoard;
+	}
+
 }
