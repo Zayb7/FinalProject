@@ -86,26 +86,43 @@ public class Board extends JPanel {
 	}
 
 	public void detectMaster() {
-
+		for(int i = 0; i < COLS; i++) {
+			for (int j = 0; j < ROWS; j++) {
+				//fallHelper(bubbleBoard[j][i]);
+			}
+		}
 	}
 
 	public ArrayList<Bubble> detectHelper(Bubble aBubble) {
 		return null;
 	}
 
-	public void fallHelper(Bubble aBubble) {
+	public void fallHelper(Bubble aBubble, int row, int col) {
 		if (aBubble.isEmpty()) {
-			if(aBubble.getRow() == 0) {
+			if(row == 0) {
 				aBubble = new Bubble(aBubble.getRow(), aBubble.getCol());
-			} else {
-				aBubble.setBubbleColor(bubbleBoard[aBubble.getRow()-1][aBubble.getCol()].getBubbleColor());
-				bubbleBoard[aBubble.getRow()-1][aBubble.getCol()].setEmpty(true);
+				aBubble.setEmpty(false);
 			}
+			else {
+				if(bubbleBoard[row-1][col].isEmpty())
+					fallHelper(aBubble, row-1, col);
+				else
+				{
+					aBubble.setBubbleColor(bubbleBoard[row-1][col].getBubbleColor());
+					aBubble.setEmpty(false);
+					bubbleBoard[row-1][col].setEmpty(true);
+				}
+			}
+			
 		}
 	}
 
 	public void fallMaster() {
-		//needs to iterate through all squares starting with a corner on the bottom row
+		for(int i = 0; i < COLS; i++) {
+			for (int j = ROWS; j > 0; j--) {
+				fallHelper(bubbleBoard[j][i], j, i);
+			}
+		}
 	}
 
 	public void moveReticle(int newRow, int newCol) {
