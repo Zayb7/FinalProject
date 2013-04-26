@@ -38,6 +38,7 @@ public class Board extends JPanel {
 			for (int row = 0; row < ROWS; ++row) {
 				for (int col = 0; col < COLS; ++col) {
 					temp = new Bubble(row, col);
+					temp.setEmpty(false);
 					temp.setBubbleColor(Integer.toString((rng.nextInt(3))));
 					bubbleBoard[row][col] = temp;
 				}
@@ -60,6 +61,7 @@ public class Board extends JPanel {
 				for (String cellColor : toSplit) {
 					Bubble tempBubble = new Bubble(row, col, false, Color.WHITE);
 					tempBubble.setBubbleColor(cellColor);
+					tempBubble.setEmpty(false);
 					bubbleBoard[row][col] = tempBubble;
 					col++;
 				}
@@ -73,7 +75,6 @@ public class Board extends JPanel {
 
 	public void swap(Bubble one, Bubble two) {
 		if (!end) {
-			System.out.println("in swap");
 			if(one.isEmpty() || two.isEmpty())
 				return;
 			
@@ -88,42 +89,52 @@ public class Board extends JPanel {
 
 	}
 
-	public void detectMaster() {
-		for (int row = 0; row < ROWS; ++row) {
-			for (int col = 0; col < COLS; ++col) {
-				adjacentCells.clear();
-				detectHelper(bubbleBoard[row][col], 1);
+	public void detectLinear() {
+		for (int row = 0; row < ROWS - 2; ++row) {
+			for (int col = 0; col < COLS - 2; ++col) {
+				if (!bubbleBoard[row][col].isEmpty()) {
+					if (bubbleBoard[row][col].getBubbleColor().equals(bubbleBoard[row + 1][col].getBubbleColor()) && bubbleBoard[row + 1][col].getBubbleColor().equals(bubbleBoard[row + 2][col].getBubbleColor())) {
+						System.out.println("Passing vertical");
+						System.out.println("Setting " + Integer.toString(row) + " " + Integer.toString(col) + " to empty.");
+						System.out.println("Setting " + Integer.toString(row+1) + " " +  Integer.toString(col) + " to empty.");
+						System.out.println("Setting " + Integer.toString(row+2) + " " + Integer.toString(col) + " to empty.");
+						bubbleBoard[row][col].setEmpty(true);
+						bubbleBoard[row + 1][col].setEmpty(true);
+						bubbleBoard[row + 2][col].setEmpty(true);
+						bubbleBoard[row][col].setBubbleColor(Color.WHITE);
+						bubbleBoard[row + 1][col].setBubbleColor(Color.WHITE);
+						bubbleBoard[row + 2][col].setBubbleColor(Color.WHITE);
+					}
+					else if (bubbleBoard[row][col].getBubbleColor().equals(bubbleBoard[row][col + 1].getBubbleColor()) && bubbleBoard[row][col + 1].getBubbleColor().equals(bubbleBoard[row][col + 2].getBubbleColor())) {
+						System.out.println("Passing horizontal");
+						System.out.println("Setting " + Integer.toString(row) + " " + Integer.toString(col) + " to empty.");
+						System.out.println("Setting " + Integer.toString(row) + " " +  Integer.toString(col+1) + " to empty.");
+						System.out.println("Setting " + Integer.toString(row) + " " + Integer.toString(col+2) + " to empty.");
+						bubbleBoard[row][col].setEmpty(true);
+						bubbleBoard[row][col + 1].setEmpty(true);
+						bubbleBoard[row][col + 2].setEmpty(true);
+						bubbleBoard[row][col].setBubbleColor(Color.WHITE);
+						bubbleBoard[row][col + 1].setBubbleColor(Color.WHITE);
+						bubbleBoard[row][col + 2].setBubbleColor(Color.WHITE);
+					}
+					else {
+						continue;
+					}
+				}
 			}
 		}
-	}
-
-	public ArrayList<Bubble> detectHelper(Bubble aBubble, int inARow) {
-		// Detect around it
-		if (aBubble.getRow() != ROWS && bubbleBoard[aBubble.getRow() + 1][aBubble.getCol()].getBubbleColor() == aBubble.getBubbleColor()) {
-			// stuff goes here
-		}
-		else if (aBubble.getCol() != COLS && bubbleBoard[aBubble.getRow()][aBubble.getCol() + 1].getBubbleColor() == aBubble.getBubbleColor()) {
-			// stuff goes here 
-		}
-		else {
-			return adjacentCells;
-		}
-		// If it's got an adj, call helper on adj and add 1 to inARow
-		// Else return
-		return null;
 	}
 
 	public void fallHelper(Bubble aBubble, int row, int col) {
 		if (aBubble.isEmpty()) {
-			if(row == 0) {
+			if (row == 0) {
 				aBubble = new Bubble(aBubble.getRow(), aBubble.getCol());
 				aBubble.setEmpty(false);
 			}
 			else {
-				if(bubbleBoard[row-1][col].isEmpty())
+				if (bubbleBoard[row-1][col].isEmpty())
 					fallHelper(aBubble, row-1, col);
-				else
-				{
+				else {
 					aBubble.setBubbleColor(bubbleBoard[row-1][col].getBubbleColor());
 					aBubble.setEmpty(false);
 					bubbleBoard[row-1][col].setEmpty(true);

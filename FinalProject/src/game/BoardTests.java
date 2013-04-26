@@ -10,36 +10,26 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 public class BoardTests {
-	public static Board testBoard;
+	public Board testBoard;
 
-	@BeforeClass
-	public static void setUpBeforeClass() {
+	@Before
+	public void setUpBeforeClass() {
 		testBoard = new Board(false);
 
 	}
 
-	
-
 	@Test
 	public void test3bubbles() {
-		// test for vertical
-		ArrayList<Bubble> temp = testBoard.detectHelper(testBoard.getBubble(0, 0), 1);
-		assertTrue(temp != null);
-		assertTrue(temp.size() == 2);
-		assertTrue(temp.contains(testBoard.getBubble(1, 0)));
-		assertTrue(temp.contains(testBoard.getBubble(2, 0)));
+		testBoard.detectLinear();
 		// test for horizontal
-		temp = testBoard.detectHelper(testBoard.getBubble(6, 11), 1);
-		assertTrue(temp.size() == 3);
-		assertTrue(temp.contains(testBoard.getBubble(6, 12)));
-		assertTrue(temp.contains(testBoard.getBubble(6, 13)));
-		assertTrue(temp.contains(testBoard.getBubble(6, 14)));
+		assertTrue(testBoard.getBubble(6, 11).isEmpty());
+		assertTrue(testBoard.getBubble(6, 12).isEmpty());
+		assertTrue(testBoard.getBubble(6, 13).isEmpty());
+		// test for vertical
+		assertTrue(testBoard.getBubble(0, 0).isEmpty());
+		assertTrue(testBoard.getBubble(1, 0).isEmpty());
+		assertTrue(testBoard.getBubble(2, 0).isEmpty());
 
-		// test for L-shape
-		temp = testBoard.detectHelper(testBoard.getBubble(5, 2), 1);
-		assertTrue(temp.size() == 2);
-		assertTrue(temp.contains(testBoard.getBubble(5, 3)));
-		assertTrue(temp.contains(testBoard.getBubble(6, 3)));
 	}
 
 	@Test
@@ -87,16 +77,15 @@ public class BoardTests {
 
 	@Test
 	public void testSwap() {
-		Board testBoard2 = new Board(false); 
-		Bubble bubbleOne = testBoard2.getBubble(4, 5);
-		Bubble bubbleTwo = testBoard2.getBubble(4, 4);
+		Bubble bubbleOne = testBoard.getBubble(4, 5);
+		Bubble bubbleTwo = testBoard.getBubble(4, 4);
 		bubbleOne.setCol(4);
 		bubbleTwo.setCol(5);
 		// swap the bubbles
-		testBoard2.swap(testBoard2.getBubble(4, 5), testBoard2.getBubble(4, 4));
+		testBoard.swap(testBoard.getBubble(4, 5), testBoard.getBubble(4, 4));
 		// check that they swapped
-		assertTrue(testBoard2.getBubble(4, 4).equals(bubbleOne));
-		assertTrue(testBoard2.getBubble(4, 5).equals(bubbleTwo));
+		assertTrue(testBoard.getBubble(4, 4).equals(bubbleOne));
+		assertTrue(testBoard.getBubble(4, 5).equals(bubbleTwo));
 	}
 
 	@Test
