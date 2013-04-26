@@ -72,8 +72,13 @@ public class BoardTests {
 	public void testDrop() {
 		// Copy the reference of this bubble
 		Bubble testBubble = testBoard.getBubble(0, 7);
+		//Mimic pop bubbles
+		testBoard.getBubbleBoard()[5][7].setEmpty(true);
+		testBoard.getBubbleBoard()[4][7].setEmpty(true);
+		testBoard.getBubbleBoard()[3][7].setEmpty(true);
+		testBoard.getBubbleBoard()[2][7].setEmpty(true);
 		// pop a stack of bubbles
-		testBoard.fallHelper(testBoard.getBubble(5, 7));
+		testBoard.fallHelper(testBoard.getBubble(5, 7), 5, 7);
 		// Check the bubbles fell
 		assertTrue(testBoard.getBubble(5, 7).getBubbleColor() == Color.GREEN);
 		// Check that the bubble is not in the previous spot
@@ -90,8 +95,6 @@ public class BoardTests {
 		// swap the bubbles
 		testBoard2.swap(testBoard2.getBubble(4, 5), testBoard2.getBubble(4, 4));
 		// check that they swapped
-		System.out.println(testBoard2.getBubble(4, 4).getRow() + " " + testBoard2.getBubble(4, 4).getCol() + " " +testBoard2.getBubble(4, 4).getBubbleColor());
-		System.out.println(bubbleOne.getRow() + " " + bubbleOne.getCol() + " " +bubbleOne.getBubbleColor());
 		assertTrue(testBoard2.getBubble(4, 4).equals(bubbleOne));
 		assertTrue(testBoard2.getBubble(4, 5).equals(bubbleTwo));
 	}
