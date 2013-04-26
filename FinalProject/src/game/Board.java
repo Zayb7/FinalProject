@@ -27,6 +27,7 @@ public class Board extends JPanel {
 
 	// methods
 	public Board(boolean isRandom) {
+		end = false;
 		bubbleBoard = new Bubble[ROWS][COLS];
 		if (isRandom) {
 			Bubble temp = null;
@@ -39,7 +40,8 @@ public class Board extends JPanel {
 					bubbleBoard[row][col] = temp;
 				}
 			}
-		} else {
+		}
+		else {
 			Scanner inputFile = null;
 			try {
 				inputFile = new Scanner(new FileReader("TEST_BOARD.csv"));
@@ -66,24 +68,20 @@ public class Board extends JPanel {
 
 	}
 
-	public int getIntTimer() {
-		return 0;
-	}
-
-	public void setIntTimer(int timer) {
-		// TODO: setup int to timer conversion
-	}
 
 	public void swap(Bubble one, Bubble two) {
-		if(one.isEmpty() || two.isEmpty())
-			return;
-		Bubble tempBubbleOne = new Bubble(one.getRow(), one.getCol(), false, one.getBubbleColor());
-		one.setBubbleColor(two.getBubbleColor());
-		two.setBubbleColor(tempBubbleOne.getBubbleColor());
-		bubbleBoard[one.getRow()][one.getCol()] = one;
-		bubbleBoard[two.getRow()][two.getCol()] = two;
+		if (!end) {
+			System.out.println("in swap");
+			if(one.isEmpty() || two.isEmpty())
+				return;
+			
+			Bubble tempBubbleOne = new Bubble(one.getRow(), one.getCol(), false, one.getBubbleColor());
+			one.setBubbleColor(two.getBubbleColor());
+			two.setBubbleColor(tempBubbleOne.getBubbleColor());
+			bubbleBoard[one.getRow()][one.getCol()] = one;
+			bubbleBoard[two.getRow()][two.getCol()] = two;
+		}
 	}
-
 	public void draw(Graphics g) {
 
 	}
@@ -166,7 +164,7 @@ public class Board extends JPanel {
 	public void setEnd(boolean end) {
 		this.end = end;
 	}
-	
+
 	public static int getRows() {
 		return ROWS;
 	}

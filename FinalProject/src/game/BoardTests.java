@@ -16,8 +16,6 @@ public class BoardTests {
 	public static void setUpBeforeClass() {
 		testBoard = new Board(false);
 
-		// load the testboard for passing tests
-		final String fileName = "TEST_BOARD.csv";
 	}
 
 	
@@ -84,17 +82,18 @@ public class BoardTests {
 
 	@Test
 	public void testSwap() {
-		Bubble bubbleOne = testBoard.getBubble(4, 5);
-		Bubble bubbleTwo = testBoard.getBubble(4, 4);
+		Board testBoard2 = new Board(false); 
+		Bubble bubbleOne = testBoard2.getBubble(4, 5);
+		Bubble bubbleTwo = testBoard2.getBubble(4, 4);
 		bubbleOne.setCol(4);
 		bubbleTwo.setCol(5);
 		// swap the bubbles
-		testBoard.swap(testBoard.getBubble(4, 5), testBoard.getBubble(4, 4));
+		testBoard2.swap(testBoard2.getBubble(4, 5), testBoard2.getBubble(4, 4));
 		// check that they swapped
-		System.out.println(testBoard.getBubble(4, 4).getRow() + " " + testBoard.getBubble(4, 4).getCol() + " " +testBoard.getBubble(4, 4).getBubbleColor());
+		System.out.println(testBoard2.getBubble(4, 4).getRow() + " " + testBoard2.getBubble(4, 4).getCol() + " " +testBoard2.getBubble(4, 4).getBubbleColor());
 		System.out.println(bubbleOne.getRow() + " " + bubbleOne.getCol() + " " +bubbleOne.getBubbleColor());
-		assertTrue(testBoard.getBubble(4, 4).equals(bubbleOne));
-		assertTrue(testBoard.getBubble(4, 5).equals(bubbleTwo));
+		assertTrue(testBoard2.getBubble(4, 4).equals(bubbleOne));
+		assertTrue(testBoard2.getBubble(4, 5).equals(bubbleTwo));
 	}
 
 	@Test
@@ -112,12 +111,8 @@ public class BoardTests {
 	// }
 
 	@Test
-	public void testEndCondition() {
-		// test that timer ends
-		testBoard.setIntTimer(0);
-		// the main function  will set the game to end
-		// check that the game has ended
-		assertTrue(testBoard.isEnd());
+	public void testEndOfGameRules() {
+		testBoard.setEnd(true);
 		// test that player can't swap after time ends
 		Bubble bubbleOne = testBoard.getBubble(4, 5);
 		Bubble bubbleTwo = testBoard.getBubble(4, 4);
