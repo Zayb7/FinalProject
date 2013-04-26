@@ -20,6 +20,7 @@ public class Board extends JPanel {
 	private int maximum_moves = 10;
 	private Timer timer;
 	private boolean end;
+	private ArrayList<Bubble> adjacentCells;
 
 
 	private String playerName;
@@ -29,6 +30,7 @@ public class Board extends JPanel {
 	public Board(boolean isRandom) {
 		end = false;
 		bubbleBoard = new Bubble[ROWS][COLS];
+		adjacentCells = new ArrayList<Bubble>();
 		if (isRandom) {
 			Bubble temp = null;
 			Random rng = new Random();
@@ -87,10 +89,27 @@ public class Board extends JPanel {
 	}
 
 	public void detectMaster() {
-
+		for (int row = 0; row < ROWS; ++row) {
+			for (int col = 0; col < COLS; ++col) {
+				adjacentCells.clear();
+				detectHelper(bubbleBoard[row][col], 1);
+			}
+		}
 	}
 
-	public ArrayList<Bubble> detectHelper(Bubble aBubble) {
+	public ArrayList<Bubble> detectHelper(Bubble aBubble, int inARow) {
+		// Detect around it
+		if (aBubble.getRow() != ROWS && bubbleBoard[aBubble.getRow() + 1][aBubble.getCol()].getBubbleColor() == aBubble.getBubbleColor()) {
+			// stuff goes here
+		}
+		else if (aBubble.getCol() != COLS && bubbleBoard[aBubble.getRow()][aBubble.getCol() + 1].getBubbleColor() == aBubble.getBubbleColor()) {
+			// stuff goes here 
+		}
+		else {
+			return adjacentCells;
+		}
+		// If it's got an adj, call helper on adj and add 1 to inARow
+		// Else return
 		return null;
 	}
 

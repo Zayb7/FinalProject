@@ -23,20 +23,20 @@ public class BoardTests {
 	@Test
 	public void test3bubbles() {
 		// test for vertical
-		ArrayList<Bubble> temp = testBoard.detectHelper(testBoard.getBubble(0, 0));
+		ArrayList<Bubble> temp = testBoard.detectHelper(testBoard.getBubble(0, 0), 1);
 		assertTrue(temp != null);
 		assertTrue(temp.size() == 2);
 		assertTrue(temp.contains(testBoard.getBubble(1, 0)));
 		assertTrue(temp.contains(testBoard.getBubble(2, 0)));
 		// test for horizontal
-		temp = testBoard.detectHelper(testBoard.getBubble(6, 11));
+		temp = testBoard.detectHelper(testBoard.getBubble(6, 11), 1);
 		assertTrue(temp.size() == 3);
 		assertTrue(temp.contains(testBoard.getBubble(6, 12)));
 		assertTrue(temp.contains(testBoard.getBubble(6, 13)));
 		assertTrue(temp.contains(testBoard.getBubble(6, 14)));
 
 		// test for L-shape
-		temp = testBoard.detectHelper(testBoard.getBubble(5, 2));
+		temp = testBoard.detectHelper(testBoard.getBubble(5, 2), 1);
 		assertTrue(temp.size() == 2);
 		assertTrue(temp.contains(testBoard.getBubble(5, 3)));
 		assertTrue(temp.contains(testBoard.getBubble(6, 3)));
