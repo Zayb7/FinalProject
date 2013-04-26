@@ -29,11 +29,14 @@ public class Board extends JPanel {
 	public Board(boolean isRandom) {
 		bubbleBoard = new Bubble[ROWS][COLS];
 		if (isRandom) {
-			Color[] colorsMapIshThing = { Color.RED, Color.BLUE, Color.GREEN };
+			Bubble temp = null;
 			Random rng = new Random();
+			Color[] colorsMapIshThing = { Color.RED, Color.BLUE, Color.GREEN };
 			for (int row = 0; row < ROWS; ++row) {
 				for (int col = 0; col < COLS; ++col) {
-
+					temp = new Bubble(row, col);
+					temp.setBubbleColor(Integer.toString((rng.nextInt(3))));
+					bubbleBoard[row][col] = temp;
 				}
 			}
 		} else {
