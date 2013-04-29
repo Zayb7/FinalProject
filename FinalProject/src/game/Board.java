@@ -89,33 +89,35 @@ public class Board extends JPanel{
 		}
 	}
 
-//	public void fallHelper(Bubble aBubble, int row, int col) {
-//		if (aBubble.isEmpty()) {
-//			if (row == 0) {
-//				aBubble = new Bubble(aBubble.getRow(), aBubble.getCol());
-//				aBubble.setEmpty(false);
-//			}
-//			else {
-//				if (bubbleBoard[row-1][col].isEmpty())
-//					fallHelper(aBubble, row-1, col);
-//				else {
-//					aBubble.setBubbleColor(bubbleBoard[row-1][col].getBubbleColor());
-//					aBubble.setEmpty(false);
-//					bubbleBoard[row-1][col].setEmpty(true);
-//				}
-//			}
-//
-//		}
-//	}
-
-	public void fall() {
-		Random rng = new Random();
-		for(int i = 0; i < ROWS; i++) {
-			for (int j = 0; j < COLS; j++) {
-				if (bubbleBoard[i][j].isEmpty()) {
-					bubbleBoard[i][j].setBubbleColor(Integer.toString(rng.nextInt(9)));
-					bubbleBoard[i][j].setEmpty(false);
+	public void fallHelper(Bubble aBubble, int row, int col) {
+		if (aBubble.isEmpty()) {
+			if (row == 0) {
+				aBubble = new Bubble(aBubble.getRow(), aBubble.getCol());
+				aBubble.setEmpty(false);
+			}
+			else {
+				if (bubbleBoard[row-1][col].isEmpty())
+					fallHelper(aBubble, row-1, col);
+				else {
+					aBubble.setBubbleColor(bubbleBoard[row-1][col].getBubbleColor());
+					aBubble.setEmpty(false);
+					bubbleBoard[row-1][col].setEmpty(true);
+					bubbleBoard[row-1][col].setBubbleColor(Color.PINK);
+					fallHelper(bubbleBoard[aBubble.getRow()][aBubble.getCol()], row-1, col);
 				}
+			}
+		}
+	}
+	public void fallMaster() {
+		for (int j = ROWS - 1; j >= 0; j--) {
+			for(int i = 0; i < COLS; i++) {
+				fallHelper(bubbleBoard[j][i], j, i);
+			}
+		}
+		for (int j = ROWS - 1; j >= 0; j--) {
+			for(int i = 0; i < COLS; i++) {
+				if(bubbleBoard[j][i].isEmpty())
+					bubbleBoard[j][i] = new Bubble(j, i);
 			}
 		}
 	}

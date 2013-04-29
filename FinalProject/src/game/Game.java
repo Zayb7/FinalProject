@@ -54,7 +54,7 @@ public class Game extends JFrame {
 	private static void gameLoop(Game game) {
 		while (true) {
 			game.board.detectLinear(game.gameStart);
-			game.board.fall();
+			game.board.fallMaster();
 			game.score.setText(Integer.toString(game.board.getScore()));
 			game.repaint();
 		}
