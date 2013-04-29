@@ -22,8 +22,21 @@ public class Game extends JFrame {
 	}
 	public static void main(String[] args) {
 		Game game = new Game();
+		game.createBoardPanel();
+		game.createControlPanel();
+		game.setTitle("Mustard Bubbles");
+		game.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		game.setSize(1280, 768);
+		game.setVisible(true);
 		
 		
 	}
+	private void createBoardPanel() {
+		// TODO Auto-generated method stub
 
+	}
+	private void createControlPanel() {
+		// TODO Auto-generated method stub
+
+	}
 }
