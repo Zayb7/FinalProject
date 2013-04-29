@@ -6,20 +6,21 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 
 public class Reticule {
+	// Constants
 	static final int ROWS = 15;
 	static final int COLS = 8;
+	static final int SIZE = 50;
+	
+	private int row, col;
+	
 	public enum Direction {
 		UP,DOWN,LEFT,RIGHT;
 	}
-	//variables
-	private int row, col;
-	static final int SIZE = 50;
 	
 	public Reticule() {
 		row = col = 0;
 	}
 	
-	//methods
 	public void draw(Graphics g){
 		Graphics2D g2d = (Graphics2D) g;
 		g2d.setStroke(new BasicStroke(3));

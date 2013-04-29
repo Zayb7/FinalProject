@@ -20,13 +20,31 @@ import javax.swing.border.TitledBorder;
 
 @SuppressWarnings("serial")
 public class Game extends JFrame {
-	//variables
+	
+	// Fields
 	public Board board;
 	private JPanel controlPanel;
 
+	public Game(){
+		board = new Board();
+		controlPanel = controlPanel();
+		add(board, BorderLayout.CENTER);
+		add(controlPanel, BorderLayout.EAST);
+		setTitle("Mustard Bubbles");
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setSize(500, 790);
+		setVisible(true);
+
+	}
+	
 	public static void main(String[] args) {
-		@SuppressWarnings("unused")
 		Game game = new Game();
+		prepareMaps(game);
+		gameLoop(game);
+		
+	}
+
+	private static void prepareMaps(Game game) {
 		InputMap im = game.board.getInputMap(JPanel.WHEN_IN_FOCUSED_WINDOW);
 		ActionMap am = game.board.getActionMap();
 
@@ -41,12 +59,44 @@ public class Game extends JFrame {
 		am.put("UpArrow", game.new KeyboardAction("UpArrow", game));
 		am.put("DownArrow", game.new KeyboardAction("DownArrow", game));
 		am.put("SpaceTheFinalFrontier", game.new KeyboardAction("BPress", game));
-		
+	}
+	
+
+	private static void gameLoop(Game game) {
 		while (true) {
 			game.board.detectLinear();
-			game.board.fallMaster();
+			game.board.fall();
 			game.repaint();
 		}
+	}
+
+
+	private JPanel controlPanel() {
+		JPanel controlPanel = new JPanel();
+		controlPanel.setLayout(new GridLayout(0, 1));
+		JButton start = new JButton("Start");
+		JButton stop = new JButton("Stop");
+		JButton reset = new JButton("Reset");
+
+		JPanel scorePanel = new JPanel();
+		JTextField score = new JTextField("Score");
+		JTextField timer = new JTextField("0");
+		timer.setEditable(false);
+		score.setEditable(false);
+		scorePanel.setLayout(new GridLayout(0, 1));
+		scorePanel.add(score);
+		scorePanel.add(timer, BorderLayout.CENTER);
+		scorePanel.setBorder(new TitledBorder(new EtchedBorder(), "Info"));
+
+
+		controlPanel.add(start);
+		controlPanel.add(stop);
+		controlPanel.add(reset);
+		controlPanel.add(scorePanel);
+		controlPanel.setBorder(new TitledBorder(new EtchedBorder(), "Controls"));
+
+
+		return controlPanel;
 	}
 
 	public class KeyboardAction extends AbstractAction {
@@ -80,44 +130,5 @@ public class Game extends JFrame {
 			}
 		}
 
-	}
-
-	public Game(){
-		board = new Board();
-		controlPanel = controlPanel();
-		add(board, BorderLayout.CENTER);
-		add(controlPanel, BorderLayout.EAST);
-		setTitle("Mustard Bubbles");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setSize(500, 790);
-		setVisible(true);
-
-	}
-	private JPanel controlPanel() {
-		JPanel controlPanel = new JPanel();
-		controlPanel.setLayout(new GridLayout(0, 1));
-		JButton start = new JButton("Start");
-		JButton stop = new JButton("Stop");
-		JButton reset = new JButton("Reset");
-
-		JPanel scorePanel = new JPanel();
-		JTextField score = new JTextField("Score");
-		JTextField timer = new JTextField("0");
-		timer.setEditable(false);
-		score.setEditable(false);
-		scorePanel.setLayout(new GridLayout(0, 1));
-		scorePanel.add(score);
-		scorePanel.add(timer, BorderLayout.CENTER);
-		scorePanel.setBorder(new TitledBorder(new EtchedBorder(), "Info"));
-
-
-		controlPanel.add(start);
-		controlPanel.add(stop);
-		controlPanel.add(reset);
-		controlPanel.add(scorePanel);
-		controlPanel.setBorder(new TitledBorder(new EtchedBorder(), "Controls"));
-
-
-		return controlPanel;
 	}
 }

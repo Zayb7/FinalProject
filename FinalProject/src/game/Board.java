@@ -4,12 +4,7 @@ import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.Random;
 import java.awt.Color;
-import java.awt.event.ActionEvent;
-
-import javax.swing.AbstractAction;
-import javax.swing.Action;
 import javax.swing.JPanel;
-import javax.swing.KeyStroke;
 
 @SuppressWarnings("serial")
 public class Board extends JPanel{
@@ -17,6 +12,7 @@ public class Board extends JPanel{
 	private Bubble[][] bubbleBoard;
 	static final int ROWS = 15;
 	static final int COLS = 8;
+	// Will be set based upon timer
 	private boolean end;
 	public Reticule reticule;
 
@@ -66,10 +62,6 @@ public class Board extends JPanel{
 			for (int col = 0; col < COLS; ++col) {
 				if (!bubbleBoard[row][col].isEmpty()) {
 					if (row + 2 < ROWS && bubbleBoard[row][col].getBubbleColor().equals(bubbleBoard[row + 1][col].getBubbleColor()) && bubbleBoard[row + 1][col].getBubbleColor().equals(bubbleBoard[row + 2][col].getBubbleColor())) {
-						System.out.println("Passing vertical");
-						System.out.println("Setting " + Integer.toString(row) + " " + Integer.toString(col) + " to empty.");
-						System.out.println("Setting " + Integer.toString(row+1) + " " +  Integer.toString(col) + " to empty.");
-						System.out.println("Setting " + Integer.toString(row+2) + " " + Integer.toString(col) + " to empty.");
 						bubbleBoard[row][col].setEmpty(true);
 						bubbleBoard[row + 1][col].setEmpty(true);
 						bubbleBoard[row + 2][col].setEmpty(true);
@@ -78,19 +70,12 @@ public class Board extends JPanel{
 						bubbleBoard[row + 2][col].setBubbleColor(Color.PINK);
 					}
 					else if (col + 2 < COLS && bubbleBoard[row][col].getBubbleColor().equals(bubbleBoard[row][col + 1].getBubbleColor()) && bubbleBoard[row][col + 1].getBubbleColor().equals(bubbleBoard[row][col + 2].getBubbleColor())) {
-						System.out.println("Passing horizontal");
-						System.out.println("Setting " + Integer.toString(row) + " " + Integer.toString(col) + " to empty.");
-						System.out.println("Setting " + Integer.toString(row) + " " +  Integer.toString(col+1) + " to empty.");
-						System.out.println("Setting " + Integer.toString(row) + " " + Integer.toString(col+2) + " to empty.");
 						bubbleBoard[row][col].setEmpty(true);
 						bubbleBoard[row][col + 1].setEmpty(true);
 						bubbleBoard[row][col + 2].setEmpty(true);
 						bubbleBoard[row][col].setBubbleColor(Color.PINK);
 						bubbleBoard[row][col + 1].setBubbleColor(Color.PINK);
 						bubbleBoard[row][col + 2].setBubbleColor(Color.PINK);
-					}
-					else {
-						continue;
 					}
 				}
 			}
@@ -116,7 +101,7 @@ public class Board extends JPanel{
 //		}
 //	}
 
-	public void fallMaster() {
+	public void fall() {
 		Random rng = new Random();
 		for(int i = 0; i < ROWS; i++) {
 			for (int j = 0; j < COLS; j++) {
@@ -129,7 +114,7 @@ public class Board extends JPanel{
 	}
 
 	public void checkEnd() {
-
+		
 	}
 
 	public int calculateScore() {
