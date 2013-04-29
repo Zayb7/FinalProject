@@ -11,11 +11,12 @@ import java.awt.Color;
 
 import javax.swing.JPanel;
 
+@SuppressWarnings("serial")
 public class Board extends JPanel {
 	// variables
 	private Bubble[][] bubbleBoard;
-	static final int ROWS = 10;
-	static final int COLS = 20;
+	static final int ROWS = 15;
+	static final int COLS = 8;
 	private int movesMade;
 	private int maximum_moves = 10;
 	private Timer timer;
@@ -34,12 +35,11 @@ public class Board extends JPanel {
 		if (isRandom) {
 			Bubble temp = null;
 			Random rng = new Random();
-			Color[] colorsMapIshThing = { Color.RED, Color.BLUE, Color.GREEN };
 			for (int row = 0; row < ROWS; ++row) {
 				for (int col = 0; col < COLS; ++col) {
 					temp = new Bubble(row, col);
 					temp.setEmpty(false);
-					temp.setBubbleColor(Integer.toString((rng.nextInt(3))));
+					temp.setBubbleColor(Integer.toString((rng.nextInt(5))));
 					bubbleBoard[row][col] = temp;
 				}
 			}
@@ -69,7 +69,7 @@ public class Board extends JPanel {
 				row++;
 			}
 		}
-
+		
 	}
 
 

@@ -6,6 +6,7 @@ import java.awt.Color;
 public class Bubble {
 
 		private int row, col;
+		static final int BUBBLE_SIZE = 50;
 		private Color bubbleColor;
 		private boolean isEmpty;
 		
@@ -78,12 +79,17 @@ public class Bubble {
 				bubbleColor = Color.RED;
 				break;
 			case ("1"):
-				bubbleColor = Color.BLUE;
+				bubbleColor = Color.YELLOW;
 				break;
 			case ("2"):
 				bubbleColor = Color.GREEN;
 				break;
-			
+			case ("3"):
+				bubbleColor = Color.MAGENTA;
+				break;
+			case ("4"):
+				bubbleColor = Color.BLUE;
+				break;
 			default:
 				System.out.println("You suck. That's not a color.");
 			}
@@ -133,6 +139,7 @@ public class Bubble {
 		}
 
 		public void draw(Graphics g){
-			
+			g.setColor(bubbleColor);
+			g.fillOval((col * BUBBLE_SIZE), (row * BUBBLE_SIZE), BUBBLE_SIZE, BUBBLE_SIZE);
 		}
 }
