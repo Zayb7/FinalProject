@@ -18,7 +18,7 @@ public class Board extends JPanel{
 	static final int ROWS = 15;
 	static final int COLS = 8;
 	private boolean end;
-	private Reticule reticule;
+	public Reticule reticule;
 	
 	// methods
 	public Board() {
