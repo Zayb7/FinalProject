@@ -1,144 +1,188 @@
 package game;
 
-import java.awt.Graphics;
-import java.util.ArrayList;
-import java.util.Random;
-import java.awt.Color;
+import game.Reticule.Direction;
+
+import java.awt.BorderLayout;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+
+import javax.swing.AbstractAction;
+import javax.swing.ActionMap;
+import javax.swing.InputMap;
+import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.KeyStroke;
+import javax.swing.border.EtchedBorder;
+import javax.swing.border.TitledBorder;
 
 @SuppressWarnings("serial")
-public class Board extends JPanel{
-	// variables
-	private Bubble[][] bubbleBoard;
-	static final int ROWS = 15;
-	static final int COLS = 8;
-	// Will be set based upon timer
-	private boolean end;
-	public Reticule reticule;
-	private int score;
+public class Game extends JFrame {
+	
+	// Fields
+	public Board board;
+	private JPanel controlPanel;
+	private static JButton start;
+	private JButton stop;
+	private JButton reset;
+	public static JTextField score;
+	public static JTextField timer;
+	public boolean gameStart = false;
+	private static boolean isRunning;
+	private static boolean justStarted;
+	private static final long GAME_LENGTH = 100;
+	private static long startTime;
+	
+	public static void main(String[] args) {
+		Game game = new Game();
+		prepareMaps(game);
+		startTime = System.currentTimeMillis()/1000;
 
-	// methods
-	public Board() {
-		end = false;
-		new ArrayList<Bubble>();
-		reticule = new Reticule();
-		bubbleBoard = new Bubble[ROWS][COLS];
-		Bubble temp = null;
-		Random rng = new Random();
-		for (int row = 0; row < ROWS; ++row) {
-			for (int col = 0; col < COLS; ++col) {
-				temp = new Bubble(row, col);
-				temp.setEmpty(false);
-				temp.setBubbleColor(Integer.toString((rng.nextInt(5))));
-				bubbleBoard[row][col] = temp;
+		while(true){
+			gameLoop(game);
+		}
+	}
+
+	private static void prepareMaps(Game game) {
+		InputMap im = game.board.getInputMap(JPanel.WHEN_IN_FOCUSED_WINDOW);
+		ActionMap am = game.board.getActionMap();
+
+		im.put(KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT, 0), "RightArrow");
+		im.put(KeyStroke.getKeyStroke(KeyEvent.VK_LEFT, 0), "LeftArrow");
+		im.put(KeyStroke.getKeyStroke(KeyEvent.VK_UP, 0), "UpArrow");
+		im.put(KeyStroke.getKeyStroke(KeyEvent.VK_DOWN, 0), "DownArrow");
+		im.put(KeyStroke.getKeyStroke(KeyEvent.VK_B, 0), "SpaceTheFinalFrontier");
+
+		am.put("RightArrow", game.new KeyboardAction("RightArrow", game));
+		am.put("LeftArrow", game.new KeyboardAction("LeftArrow", game));
+		am.put("UpArrow", game.new KeyboardAction("UpArrow", game));
+		am.put("DownArrow", game.new KeyboardAction("DownArrow", game));
+		am.put("SpaceTheFinalFrontier", game.new KeyboardAction("BPress", game));
+	}
+	
+
+	private static void gameLoop(Game game) {
+		while (isRunning) {
+			if (justStarted) {
+				game.board.setScore(0);
+				justStarted = false;
+			}
+			game.board.detectLinear(game.gameStart);
+			game.board.fallMaster();
+			game.score.setText(Integer.toString(game.board.getScore()));
+			game.timer.setText(Integer.toString((int) (GAME_LENGTH- (System.currentTimeMillis()/1000-startTime))));
+			//System.out.println(GAME_LENGTH- (System.currentTimeMillis()/1000-startTime));
+			game.repaint();
+			if ((startTime + GAME_LENGTH) <= System.currentTimeMillis()/1000) {
+				isRunning = false;
+				game.timer.setText("END!");
+				//start.setEnabled(true);
 			}
 		}
 	}
 
+	public class KeyboardAction extends AbstractAction {
 
-	public void swap(Bubble one, Bubble two) {
-		if(one.isEmpty() || two.isEmpty()) {
-			return;
+		public String cmd;
+		public Game game;
+
+		public KeyboardAction(String cmd, Game game) {
+			this.cmd = cmd;
+			this.game = game;
+			
 		}
-		Color tempColor = one.getBubbleColor();
-		one.setBubbleColor(two.getBubbleColor());
-		two.setBubbleColor(tempColor);
-		bubbleBoard[one.getRow()][one.getCol()] = one;
-		bubbleBoard[two.getRow()][two.getCol()] = two;
-	}
-	@Override
-	public void paintComponent(Graphics g) {
-		g.setColor(Color.GRAY);
-		g.fillRect(0, 0, 5000, 5000);
-		for (int i = 0; i < ROWS; i++) {
-			for (int j = 0; j < COLS; j++) {
-				bubbleBoard[i][j].draw(g);
+
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			if (cmd.equalsIgnoreCase("LeftArrow")) {
+				game.board.reticule.move(Direction.LEFT);
+				//System.out.println("LEFT");
+			}
+			else if (cmd.equalsIgnoreCase("UpArrow")) {
+				game.board.reticule.move(Direction.UP);
+			}
+			else if (cmd.equalsIgnoreCase("DownArrow")) {
+				game.board.reticule.move(Direction.DOWN);
+				//System.out.println("DOWN");
+			}
+			else if (cmd.equalsIgnoreCase("RightArrow")) {
+				game.board.reticule.move(Direction.RIGHT);
+				//System.out.println("RIGHT");
+			}
+			
+			else if (cmd.equalsIgnoreCase("BPress")) {
+				int r = game.board.reticule.getRow();
+				int c = game.board.reticule.getCol();
+				game.board.swap(game.board.getBubbleAt(r, c), game.board.getBubbleAt(r, c + 1));
+				game.gameStart = true;
 			}
 		}
-		reticule.draw(g);
-	}
 
-	public void detectLinear(boolean gameStart) {
-		for (int row = 0; row < ROWS; ++row) {
-			for (int col = 0; col < COLS; ++col) {
-				if (!bubbleBoard[row][col].isEmpty()) {
-					if (row + 2 < ROWS && bubbleBoard[row][col].getBubbleColor().equals(bubbleBoard[row + 1][col].getBubbleColor()) && bubbleBoard[row + 1][col].getBubbleColor().equals(bubbleBoard[row + 2][col].getBubbleColor())) {
-						bubbleBoard[row][col].setEmpty(true);
-						bubbleBoard[row + 1][col].setEmpty(true);
-						bubbleBoard[row + 2][col].setEmpty(true);
-						bubbleBoard[row][col].setBubbleColor(Color.PINK);
-						bubbleBoard[row + 1][col].setBubbleColor(Color.PINK);
-						bubbleBoard[row + 2][col].setBubbleColor(Color.PINK);
-						if (gameStart) {
-							this.calculateScore();
-						}
-					}
-					else if (col + 2 < COLS && bubbleBoard[row][col].getBubbleColor().equals(bubbleBoard[row][col + 1].getBubbleColor()) && bubbleBoard[row][col + 1].getBubbleColor().equals(bubbleBoard[row][col + 2].getBubbleColor())) {
-						bubbleBoard[row][col].setEmpty(true);
-						bubbleBoard[row][col + 1].setEmpty(true);
-						bubbleBoard[row][col + 2].setEmpty(true);
-						bubbleBoard[row][col].setBubbleColor(Color.PINK);
-						bubbleBoard[row][col + 1].setBubbleColor(Color.PINK);
-						bubbleBoard[row][col + 2].setBubbleColor(Color.PINK);
-						if (gameStart) {
-							this.calculateScore();
-						}
-					}
-				}
-			}
-		}
 	}
 
-	public void fallHelper(Bubble aBubble, int row, int col) {
-		if (aBubble.isEmpty()) {
-			if (row == 0) {
-				aBubble = new Bubble(aBubble.getRow(), aBubble.getCol());
-				aBubble.setEmpty(false);
-			}
-			else {
-				if (bubbleBoard[row-1][col].isEmpty())
-					fallHelper(aBubble, row-1, col);
-				else {
-					aBubble.setBubbleColor(bubbleBoard[row-1][col].getBubbleColor());
-					aBubble.setEmpty(false);
-					bubbleBoard[row-1][col].setEmpty(true);
-					bubbleBoard[row-1][col].setBubbleColor(Color.PINK);
-					fallHelper(bubbleBoard[aBubble.getRow()][aBubble.getCol()], row-1, col);
-				}
-			}
-		}
-	}
-	public void fallMaster() {
-		for (int j = ROWS - 1; j >= 0; j--) {
-			for(int i = 0; i < COLS; i++) {
-				fallHelper(bubbleBoard[j][i], j, i);
-			}
-		}
-		for (int j = ROWS - 1; j >= 0; j--) {
-			for(int i = 0; i < COLS; i++) {
-				if(bubbleBoard[j][i].isEmpty())
-					bubbleBoard[j][i] = new Bubble(j, i);
-			}
-		}
-	}
+	public Game(){
+		board = new Board();
+		controlPanel = controlPanel();
+		add(board, BorderLayout.CENTER);
+		add(controlPanel, BorderLayout.EAST);
+		setTitle("Mustard Bubbles");
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setSize(500, 800);
+		setVisible(true);
+		isRunning = false;
+		//stop.setEnabled(false);
 
-	public void checkEnd() {
+
+	}
+	private JPanel controlPanel() {
+		JPanel controlPanel = new JPanel();
+		controlPanel.setLayout(new GridLayout(0, 1));
+		start = new JButton("Start");
+		stop = new JButton("Stop");
+		reset = new JButton("Reset");
+		start.addActionListener(new ButtonListener());
+		stop.addActionListener(new ButtonListener());
+		reset.addActionListener(new ButtonListener());
+
+
+		JPanel scorePanel = new JPanel();
+		score = new JTextField("Score");
+		timer = new JTextField("0");
+		timer.setEditable(false);
+		score.setEditable(false);
+		scorePanel.setLayout(new GridLayout(0, 1));
+		scorePanel.add(score);
+		scorePanel.add(timer, BorderLayout.CENTER);
+		scorePanel.setBorder(new TitledBorder(new EtchedBorder(), "Info"));
+
+		controlPanel.add(start);
+		controlPanel.add(stop);
+		controlPanel.add(scorePanel);
+		controlPanel.setBorder(new TitledBorder(new EtchedBorder(), "Controls"));
+
+
+		return controlPanel;
+	}
+	private class ButtonListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			if (e.getSource().toString().contains("Start")) {
+				startTime = System.currentTimeMillis()/1000;
+				isRunning = true;
+				start.setEnabled(false);
+				justStarted = true;
+			} else if (e.getSource().toString().contains("Stop")) {
+				isRunning = false;
+				start.setEnabled(true);
+			}else {
+				System.out.println("Not a button");
+			}
+			
+		}
 		
-	}
-
-	public void calculateScore() {
-		score += 100; 
-	}
-	
-	public void setScore(int score) {
-		this.score = score;
-	}
-	
-	public int getScore() {
-		return score;
-	}
-	
-	public Bubble getBubbleAt(int r, int c) {
-		return bubbleBoard[r][c];
 	}
 }
