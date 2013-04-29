@@ -25,12 +25,12 @@ public class Game extends JFrame {
 	public Board board;
 	private JPanel controlPanel;
 	public JTextField score;
+	public boolean gameStart = false;
 	
 	public static void main(String[] args) {
 		Game game = new Game();
 		prepareMaps(game);
 		gameLoop(game);
-		
 	}
 
 	private static void prepareMaps(Game game) {
@@ -53,7 +53,7 @@ public class Game extends JFrame {
 
 	private static void gameLoop(Game game) {
 		while (true) {
-			game.board.detectLinear();
+			game.board.detectLinear(game.gameStart);
 			game.board.fall();
 			game.score.setText(Integer.toString(game.board.getScore()));
 			game.repaint();
@@ -68,6 +68,7 @@ public class Game extends JFrame {
 		public KeyboardAction(String cmd, Game game) {
 			this.cmd = cmd;
 			this.game = game;
+			
 		}
 
 		@Override
@@ -88,6 +89,7 @@ public class Game extends JFrame {
 				int r = game.board.reticule.getRow();
 				int c = game.board.reticule.getCol();
 				game.board.swap(game.board.getBubbleAt(r, c), game.board.getBubbleAt(r, c + 1));
+				game.gameStart = true;
 			}
 		}
 

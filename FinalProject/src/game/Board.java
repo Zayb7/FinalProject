@@ -58,7 +58,7 @@ public class Board extends JPanel{
 		reticule.draw(g);
 	}
 
-	public void detectLinear() {
+	public void detectLinear(boolean gameStart) {
 		for (int row = 0; row < ROWS; ++row) {
 			for (int col = 0; col < COLS; ++col) {
 				if (!bubbleBoard[row][col].isEmpty()) {
@@ -69,7 +69,9 @@ public class Board extends JPanel{
 						bubbleBoard[row][col].setBubbleColor(Color.PINK);
 						bubbleBoard[row + 1][col].setBubbleColor(Color.PINK);
 						bubbleBoard[row + 2][col].setBubbleColor(Color.PINK);
-						this.calculateScore();
+						if (gameStart) {
+							this.calculateScore();
+						}
 					}
 					else if (col + 2 < COLS && bubbleBoard[row][col].getBubbleColor().equals(bubbleBoard[row][col + 1].getBubbleColor()) && bubbleBoard[row][col + 1].getBubbleColor().equals(bubbleBoard[row][col + 2].getBubbleColor())) {
 						bubbleBoard[row][col].setEmpty(true);
@@ -78,7 +80,9 @@ public class Board extends JPanel{
 						bubbleBoard[row][col].setBubbleColor(Color.PINK);
 						bubbleBoard[row][col + 1].setBubbleColor(Color.PINK);
 						bubbleBoard[row][col + 2].setBubbleColor(Color.PINK);
-						this.calculateScore();
+						if (gameStart) {
+							this.calculateScore();
+						}
 					}
 				}
 			}
@@ -122,6 +126,10 @@ public class Board extends JPanel{
 
 	public void calculateScore() {
 		score += 100; 
+	}
+	
+	public void setScore(int score) {
+		this.score = score;
 	}
 	
 	public int getScore() {
