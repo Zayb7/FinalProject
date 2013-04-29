@@ -19,6 +19,7 @@ public class Board extends JPanel{
 	static final int COLS = 8;
 	private boolean end;
 	public Reticule reticule;
+	private int score;
 
 	// methods
 	public Board() {
@@ -76,6 +77,7 @@ public class Board extends JPanel{
 						bubbleBoard[row][col].setBubbleColor(Color.PINK);
 						bubbleBoard[row + 1][col].setBubbleColor(Color.PINK);
 						bubbleBoard[row + 2][col].setBubbleColor(Color.PINK);
+						this.calculateScore();
 					}
 					else if (col + 2 < COLS && bubbleBoard[row][col].getBubbleColor().equals(bubbleBoard[row][col + 1].getBubbleColor()) && bubbleBoard[row][col + 1].getBubbleColor().equals(bubbleBoard[row][col + 2].getBubbleColor())) {
 						System.out.println("Passing horizontal");
@@ -88,6 +90,7 @@ public class Board extends JPanel{
 						bubbleBoard[row][col].setBubbleColor(Color.PINK);
 						bubbleBoard[row][col + 1].setBubbleColor(Color.PINK);
 						bubbleBoard[row][col + 2].setBubbleColor(Color.PINK);
+						this.calculateScore();
 					}
 					else {
 						continue;
@@ -132,9 +135,14 @@ public class Board extends JPanel{
 
 	}
 
-	public int calculateScore() {
-		return 0;
+	public void calculateScore() {
+		score += 100; 
 	}
+	
+	public int getScore() {
+		return score;
+	}
+	
 	public Bubble getBubbleAt(int r, int c) {
 		return bubbleBoard[r][c];
 	}

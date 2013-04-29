@@ -23,6 +23,7 @@ public class Game extends JFrame {
 	//variables
 	public Board board;
 	private JPanel controlPanel;
+	public JTextField score;
 
 	public static void main(String[] args) {
 		@SuppressWarnings("unused")
@@ -45,6 +46,7 @@ public class Game extends JFrame {
 		while (true) {
 			game.board.detectLinear();
 			game.board.fallMaster();
+			game.score.setText(Integer.toString(game.board.getScore()));
 			game.repaint();
 		}
 	}
@@ -101,7 +103,7 @@ public class Game extends JFrame {
 		JButton reset = new JButton("Reset");
 
 		JPanel scorePanel = new JPanel();
-		JTextField score = new JTextField("Score");
+		score = new JTextField("Score");
 		JTextField timer = new JTextField("0");
 		timer.setEditable(false);
 		score.setEditable(false);
@@ -109,7 +111,6 @@ public class Game extends JFrame {
 		scorePanel.add(score);
 		scorePanel.add(timer, BorderLayout.CENTER);
 		scorePanel.setBorder(new TitledBorder(new EtchedBorder(), "Info"));
-
 
 		controlPanel.add(start);
 		controlPanel.add(stop);
