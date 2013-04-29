@@ -20,7 +20,7 @@ public class Game extends JFrame {
 	private JPanel controlPanel;
 	
 	public Game(){
-		board = new Board(true);
+		board = new Board();
 		controlPanel = controlPanel();
 		add(board, BorderLayout.CENTER);
 		add(controlPanel, BorderLayout.EAST);

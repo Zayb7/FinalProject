@@ -29,49 +29,20 @@ public class Board extends JPanel {
 	private Reticule reticule;
 
 	// methods
-	public Board(boolean isRandom) {
+	public Board() {
 		end = false;
 		adjacentCells = new ArrayList<Bubble>();
 		reticule = new Reticule();
-		if (isRandom) {
-			bubbleBoard = new Bubble[ROWS][COLS];
-			Bubble temp = null;
-			Random rng = new Random();
-			for (int row = 0; row < ROWS; ++row) {
-				for (int col = 0; col < COLS; ++col) {
-					temp = new Bubble(row, col);
-					temp.setEmpty(false);
-					temp.setBubbleColor(Integer.toString((rng.nextInt(5))));
-					bubbleBoard[row][col] = temp;
-				}
+		bubbleBoard = new Bubble[ROWS][COLS];
+		Bubble temp = null;
+		Random rng = new Random();
+		for (int row = 0; row < ROWS; ++row) {
+			for (int col = 0; col < COLS; ++col) {
+				temp = new Bubble(row, col);
+				temp.setEmpty(false);
+				temp.setBubbleColor(Integer.toString((rng.nextInt(5))));
+				bubbleBoard[row][col] = temp;
 			}
-		}
-		else {
-			bubbleBoard = new Bubble[10][20];
-			Scanner inputFile = null;
-			try {
-				inputFile = new Scanner(new FileReader("TEST_BOARD.csv"));
-			} catch (FileNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			int row = 0;
-			int col = 0;
-			while (inputFile.hasNextLine()) {
-
-				String line = inputFile.nextLine();
-				String[] toSplit = line.split(",");
-				for (String cellColor : toSplit) {
-					Bubble tempBubble = new Bubble(row, col, false, Color.WHITE);
-					tempBubble.setBubbleColor(cellColor);
-					tempBubble.setEmpty(false);
-					bubbleBoard[row][col] = tempBubble;
-					col++;
-				}
-				col = 0;
-				row++;
-			}
-			System.out.println("row" + row + " " + "col" + col);
 		}
 		this.setBackground(Color.BLACK);
 	}
@@ -81,7 +52,7 @@ public class Board extends JPanel {
 		if (!end) {
 			if(one.isEmpty() || two.isEmpty())
 				return;
-			
+
 			Bubble tempBubbleOne = new Bubble(one.getRow(), one.getCol(), false, one.getBubbleColor());
 			one.setBubbleColor(two.getBubbleColor());
 			two.setBubbleColor(tempBubbleOne.getBubbleColor());
@@ -152,7 +123,7 @@ public class Board extends JPanel {
 					bubbleBoard[row-1][col].setEmpty(true);
 				}
 			}
-			
+
 		}
 	}
 
