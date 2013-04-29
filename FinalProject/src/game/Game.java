@@ -1,6 +1,8 @@
 package game;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Graphics;
 import java.awt.GridLayout;
 
 import javax.swing.JButton;
@@ -20,13 +22,11 @@ public class Game extends JFrame {
 	public Game(){
 		board = new Board(true);
 		controlPanel = controlPanel();
-		
 		add(board, BorderLayout.CENTER);
 		add(controlPanel, BorderLayout.EAST);
-		
 		setTitle("Mustard Bubbles");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setSize(580, 750);
+		setSize(500, 750);
 		setVisible(true);
 		
 	}
@@ -36,26 +36,26 @@ public class Game extends JFrame {
 		
 	}
 	public static void main(String[] args) {
-		new Game();
+		Game game = new Game();
 
 	}
 	
 	private JPanel controlPanel() {
 		JPanel controlPanel = new JPanel();
 		controlPanel.setLayout(new GridLayout(0, 1));
-		JButton start = new JButton("Start Game");
-		JButton stop = new JButton("STAHP");
-		JButton reset = new JButton("Reset dat bitch");
+		JButton start = new JButton("Start");
+		JButton stop = new JButton("Stop");
+		JButton reset = new JButton("Reset");
 		
 		JPanel scorePanel = new JPanel();
-		JTextField score = new JTextField("Score this madafaka");
+		JTextField score = new JTextField("Score");
 		JTextField timer = new JTextField("0");
 		timer.setEditable(false);
 		score.setEditable(false);
 		scorePanel.setLayout(new GridLayout(0, 1));
 		scorePanel.add(score);
 		scorePanel.add(timer, BorderLayout.CENTER);
-		scorePanel.setBorder(new TitledBorder(new EtchedBorder(), "Score and Time"));
+		scorePanel.setBorder(new TitledBorder(new EtchedBorder(), "Info"));
 		
 		
 		controlPanel.add(start);

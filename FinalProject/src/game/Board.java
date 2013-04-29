@@ -26,13 +26,15 @@ public class Board extends JPanel {
 
 	private String playerName;
 	private int highScore;
+	private Reticule reticule;
 
 	// methods
 	public Board(boolean isRandom) {
 		end = false;
-		bubbleBoard = new Bubble[ROWS][COLS];
 		adjacentCells = new ArrayList<Bubble>();
+		reticule = new Reticule();
 		if (isRandom) {
+			bubbleBoard = new Bubble[ROWS][COLS];
 			Bubble temp = null;
 			Random rng = new Random();
 			for (int row = 0; row < ROWS; ++row) {
@@ -45,6 +47,7 @@ public class Board extends JPanel {
 			}
 		}
 		else {
+			bubbleBoard = new Bubble[10][20];
 			Scanner inputFile = null;
 			try {
 				inputFile = new Scanner(new FileReader("TEST_BOARD.csv"));
@@ -68,8 +71,9 @@ public class Board extends JPanel {
 				col = 0;
 				row++;
 			}
+			System.out.println("row" + row + " " + "col" + col);
 		}
-		
+		this.setBackground(Color.BLACK);
 	}
 
 
@@ -87,11 +91,14 @@ public class Board extends JPanel {
 	}
 	@Override
 	public void paintComponent(Graphics g) {
+		g.setColor(Color.GRAY);
+		g.fillRect(0, 0, 5000, 5000);
 		for (int i = 0; i < ROWS; i++) {
 			for (int j = 0; j < COLS; j++) {
 				bubbleBoard[i][j].draw(g);
 			}
 		}
+		reticule.draw(g);
 	}
 
 	public void detectLinear() {

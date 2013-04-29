@@ -76,19 +76,19 @@ public class Bubble {
 				bubbleColor = Color.GREEN;
 				break;
 			case ("0"):
-				bubbleColor = Color.RED;
+				bubbleColor = new Color(255,0,0);
 				break;
 			case ("1"):
-				bubbleColor = Color.YELLOW;
+				bubbleColor = new Color(0,255,0);
 				break;
 			case ("2"):
-				bubbleColor = Color.GREEN;
+				bubbleColor = new Color(0,0,255);
 				break;
 			case ("3"):
-				bubbleColor = Color.MAGENTA;
+				bubbleColor = new Color(255,255,255);
 				break;
 			case ("4"):
-				bubbleColor = Color.BLUE;
+				bubbleColor = new Color(0,0,0);
 				break;
 			default:
 				System.out.println("You suck. That's not a color.");
@@ -141,5 +141,7 @@ public class Bubble {
 		public void draw(Graphics g){
 			g.setColor(bubbleColor);
 			g.fillOval((col * BUBBLE_SIZE), (row * BUBBLE_SIZE), BUBBLE_SIZE, BUBBLE_SIZE);
+			g.setColor(Color.BLACK);
+			g.drawOval((col * BUBBLE_SIZE), (row * BUBBLE_SIZE), BUBBLE_SIZE, BUBBLE_SIZE);
 		}
 }

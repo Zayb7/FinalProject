@@ -40,7 +40,7 @@ public class BoardTests {
 		assertTrue(testBoard.getRows() == 10);
 
 		// test for randomness
-		Board testBoardOne = new Board(true);
+		Board testBoardOne = new Board(false);
 
 		// corners
 		assertFalse(testBoardOne.getBubble(0, 0) == null);
