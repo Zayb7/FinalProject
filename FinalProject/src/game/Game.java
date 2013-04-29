@@ -1,15 +1,18 @@
 package game;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Graphics;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
 
+import javax.swing.AbstractAction;
+import javax.swing.ActionMap;
+import javax.swing.InputMap;
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.KeyStroke;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 
@@ -18,6 +21,38 @@ public class Game extends JFrame {
 	//variables
 	public Board board;
 	private JPanel controlPanel;
+	
+	public static void main(String[] args) {
+		@SuppressWarnings("unused")
+		Game game = new Game();
+		InputMap im = game.board.getInputMap(JPanel.WHEN_IN_FOCUSED_WINDOW);
+		ActionMap am = game.board.getActionMap();
+		
+		im.put(KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT, 0), "RightArrow");
+		im.put(KeyStroke.getKeyStroke(KeyEvent.VK_LEFT, 0), "LeftArrow");
+		im.put(KeyStroke.getKeyStroke(KeyEvent.VK_UP, 0), "UpArrow");
+		im.put(KeyStroke.getKeyStroke(KeyEvent.VK_DOWN, 0), "DownArrow");
+		
+		am.put("RightArrow", game.new KeyboardAction("RightArrow"));
+	    am.put("LeftArrow", game.new KeyboardAction("LeftArrow"));
+	    am.put("UpArrow", game.new KeyboardAction("UpArrow"));
+	    am.put("DownArrow", game.new KeyboardAction("DownArrow"));
+	}
+
+	public class KeyboardAction extends AbstractAction {
+		
+		public String cmd;
+		
+		public KeyboardAction(String cmd) {
+			this.cmd = cmd;
+		}
+		
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			System.out.println("IM DOING THINGS HURRRRRR");
+		}
+	
+	}
 	
 	public Game(){
 		board = new Board();
@@ -30,16 +65,6 @@ public class Game extends JFrame {
 		setVisible(true);
 		
 	}
-	
-	//writing the final file
-	public void updateHighScores(){
-		
-	}
-	public static void main(String[] args) {
-		Game game = new Game();
-
-	}
-	
 	private JPanel controlPanel() {
 		JPanel controlPanel = new JPanel();
 		controlPanel.setLayout(new GridLayout(0, 1));

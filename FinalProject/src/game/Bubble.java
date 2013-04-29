@@ -1,7 +1,9 @@
 package game;
 
+import java.awt.BasicStroke;
 import java.awt.Graphics;
 import java.awt.Color;
+import java.awt.Graphics2D;
 
 public class Bubble {
 
@@ -139,9 +141,11 @@ public class Bubble {
 		}
 
 		public void draw(Graphics g){
-			g.setColor(bubbleColor);
-			g.fillOval((col * BUBBLE_SIZE), (row * BUBBLE_SIZE), BUBBLE_SIZE, BUBBLE_SIZE);
-			g.setColor(Color.BLACK);
-			g.drawOval((col * BUBBLE_SIZE), (row * BUBBLE_SIZE), BUBBLE_SIZE, BUBBLE_SIZE);
+			Graphics2D g2d = (Graphics2D) g;
+			g2d.setColor(bubbleColor);
+			g2d.fillOval((col * BUBBLE_SIZE), (row * BUBBLE_SIZE), BUBBLE_SIZE, BUBBLE_SIZE);
+			g2d.setColor(Color.BLACK);
+			g2d.setStroke(new BasicStroke(5));
+			g2d.drawOval((col * BUBBLE_SIZE), (row * BUBBLE_SIZE), BUBBLE_SIZE, BUBBLE_SIZE);
 		}
 }

@@ -5,7 +5,9 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 
-public class Reticule{
+public class Reticule {
+	static final int ROWS = 15;
+	static final int COLS = 8;
 	public enum Direction {
 		UP,DOWN,LEFT,RIGHT;
 	}
@@ -20,13 +22,32 @@ public class Reticule{
 	//methods
 	public void draw(Graphics g){
 		Graphics2D g2d = (Graphics2D) g;
-		g2d.setStroke(new BasicStroke(3F));
-		g2d.setColor(Color.BLACK);
+		g2d.setStroke(new BasicStroke(3));
+		g2d.setColor(Color.MAGENTA);
 		g2d.drawRect(col * SIZE, row * SIZE, SIZE * 2, SIZE);
 	}
 	
 	public void move(Direction d) {
-		// TODO Auto-generated method stub
+		switch (d) {
+		case UP:
+			tryMove(row - 1, col);
+			break;
+		case DOWN:
+			tryMove(row + 1, col);
+			break;
+		case LEFT:
+			tryMove(row, col - 1);
+			break;
+		case RIGHT:
+			tryMove(row, col + 1);
+			break;
+		}
+	}
 
+	private void tryMove(int i, int j) {
+		if ((i >= 0) && (j >=0) && (i < ROWS) && (j < COLS - 1)) {
+			row = i;
+			col = j;
+		}
 	}
 }

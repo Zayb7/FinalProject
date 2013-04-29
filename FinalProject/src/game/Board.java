@@ -1,37 +1,29 @@
 package game;
 
 import java.awt.Graphics;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Random;
-import java.util.Scanner;
-import java.util.Timer;
 import java.awt.Color;
+import java.awt.event.ActionEvent;
 
+import javax.swing.AbstractAction;
+import javax.swing.Action;
 import javax.swing.JPanel;
+import javax.swing.KeyStroke;
 
 @SuppressWarnings("serial")
-public class Board extends JPanel {
+public class Board extends JPanel{
 	// variables
 	private Bubble[][] bubbleBoard;
 	static final int ROWS = 15;
 	static final int COLS = 8;
-	private int movesMade;
-	private int maximum_moves = 10;
-	private Timer timer;
 	private boolean end;
-	private ArrayList<Bubble> adjacentCells;
-
-
-	private String playerName;
-	private int highScore;
 	private Reticule reticule;
-
+	
 	// methods
 	public Board() {
 		end = false;
-		adjacentCells = new ArrayList<Bubble>();
+		new ArrayList<Bubble>();
 		reticule = new Reticule();
 		bubbleBoard = new Bubble[ROWS][COLS];
 		Bubble temp = null;
@@ -44,10 +36,9 @@ public class Board extends JPanel {
 				bubbleBoard[row][col] = temp;
 			}
 		}
-		this.setBackground(Color.BLACK);
 	}
 
-
+	
 	public void swap(Bubble one, Bubble two) {
 		if (!end) {
 			if(one.isEmpty() || two.isEmpty())
@@ -135,89 +126,12 @@ public class Board extends JPanel {
 		}
 	}
 
-	public void moveReticle(int newRow, int newCol) {
-
-	}
-
 	public void checkEnd() {
 
 	}
 
 	public int calculateScore() {
 		return 0;
-	}
-
-	// getters and setters
-	public Bubble[][] getBubbleBoard() {
-		return bubbleBoard;
-	}
-
-	public Bubble getBubble(int row, int col) {
-		return bubbleBoard[row][col];
-	}
-
-	public void setBubble(Bubble aBubble) {
-
-	}
-	public int getMovesMade() {
-		return movesMade;
-	}
-
-	public void setMovesMade(int movesMade) {
-		this.movesMade = movesMade;
-	}
-
-	public int getMaximum_moves() {
-		return maximum_moves;
-	}
-
-	public void setMaximum_moves(int maximum_moves) {
-		this.maximum_moves = maximum_moves;
-	}
-
-	public Timer getTimer() {
-		return timer;
-	}
-
-	public void setTimer(Timer timer) {
-		this.timer = timer;
-	}
-
-	public boolean isEnd() {
-		return end;
-	}
-
-	public void setEnd(boolean end) {
-		this.end = end;
-	}
-
-	public static int getRows() {
-		return ROWS;
-	}
-
-	public static int getCols() {
-		return COLS;
-	}
-
-
-	public String getPlayerName() {
-		return playerName;
-	}
-
-	public void setPlayerName(String playerName) {
-		this.playerName = playerName;
-	}
-
-	public int getHighScore() {
-		return highScore;
-	}
-
-	public void setHighScore(int highScore) {
-		this.highScore = highScore;
-	}
-
-	public void setBubbleBoard(Bubble[][] bubbleBoard) {
-		this.bubbleBoard = bubbleBoard;
 	}
 
 }
