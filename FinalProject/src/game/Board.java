@@ -85,8 +85,13 @@ public class Board extends JPanel {
 			bubbleBoard[two.getRow()][two.getCol()] = two;
 		}
 	}
-	public void draw(Graphics g) {
-
+	@Override
+	public void paintComponent(Graphics g) {
+		for (int i = 0; i < ROWS; i++) {
+			for (int j = 0; j < COLS; j++) {
+				bubbleBoard[i][j].draw(g);
+			}
+		}
 	}
 
 	public void detectLinear() {
