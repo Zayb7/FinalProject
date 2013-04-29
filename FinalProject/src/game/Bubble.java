@@ -33,18 +33,10 @@ public class Bubble {
 		return row;
 	}
 
-	public void setRow(int row) {
-		this.row = row;
-	}
-
 	public int getCol() {
 		return col;
 	}
-
-	public void setCol(int col) {
-		this.col = col;
-	}
-
+	
 	public Color getBubbleColor() {
 		return bubbleColor;
 	}
@@ -70,8 +62,6 @@ public class Bubble {
 		case ("4"):
 			bubbleColor = new Color(0,0,0);
 		break;
-		
-		
 		case ("5"):
 			bubbleColor = Color.DARK_GRAY;
 		break;
@@ -85,7 +75,7 @@ public class Bubble {
 			bubbleColor = Color.MAGENTA;
 		break;
 		default:
-			System.out.println("You suck. That's not a color.");
+			System.out.println("That's not a color.");
 		}
 	}
 

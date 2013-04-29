@@ -20,14 +20,20 @@ import javax.swing.border.TitledBorder;
 
 @SuppressWarnings("serial")
 public class Game extends JFrame {
-	//variables
+	
+	// Fields
 	public Board board;
 	private JPanel controlPanel;
 	public JTextField score;
-
+	
 	public static void main(String[] args) {
-		@SuppressWarnings("unused")
 		Game game = new Game();
+		prepareMaps(game);
+		gameLoop(game);
+		
+	}
+
+	private static void prepareMaps(Game game) {
 		InputMap im = game.board.getInputMap(JPanel.WHEN_IN_FOCUSED_WINDOW);
 		ActionMap am = game.board.getActionMap();
 
@@ -42,10 +48,13 @@ public class Game extends JFrame {
 		am.put("UpArrow", game.new KeyboardAction("UpArrow", game));
 		am.put("DownArrow", game.new KeyboardAction("DownArrow", game));
 		am.put("SpaceTheFinalFrontier", game.new KeyboardAction("BPress", game));
-		
+	}
+	
+
+	private static void gameLoop(Game game) {
 		while (true) {
 			game.board.detectLinear();
-			game.board.fallMaster();
+			game.board.fall();
 			game.score.setText(Integer.toString(game.board.getScore()));
 			game.repaint();
 		}
