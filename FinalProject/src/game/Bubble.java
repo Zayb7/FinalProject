@@ -36,7 +36,6 @@ public class Bubble {
 	public int getCol() {
 		return col;
 	}
-	
 	public Color getBubbleColor() {
 		return bubbleColor;
 	}

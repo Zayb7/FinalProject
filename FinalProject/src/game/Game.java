@@ -21,7 +21,7 @@ import javax.swing.border.TitledBorder;
 
 @SuppressWarnings("serial")
 public class Game extends JFrame {
-	
+
 	// Fields
 	public Board board;
 	private JPanel controlPanel;
@@ -35,12 +35,12 @@ public class Game extends JFrame {
 	private static boolean justStarted;
 	private static final long GAME_LENGTH = 100;
 	private static long startTime;
-	
+
 	public static void main(String[] args) {
 		Game game = new Game();
 		prepareMaps(game);
 		startTime = System.currentTimeMillis()/1000;
-
+		//Test save
 		while(true){
 			gameLoop(game);
 		}
@@ -62,7 +62,7 @@ public class Game extends JFrame {
 		am.put("DownArrow", game.new KeyboardAction("DownArrow", game));
 		am.put("SpaceTheFinalFrontier", game.new KeyboardAction("BPress", game));
 	}
-	
+
 
 	private static void gameLoop(Game game) {
 		while (isRunning) {
@@ -92,7 +92,7 @@ public class Game extends JFrame {
 		public KeyboardAction(String cmd, Game game) {
 			this.cmd = cmd;
 			this.game = game;
-			
+
 		}
 
 		@Override
@@ -112,7 +112,7 @@ public class Game extends JFrame {
 				game.board.reticule.move(Direction.RIGHT);
 				//System.out.println("RIGHT");
 			}
-			
+
 			else if (cmd.equalsIgnoreCase("BPress")) {
 				int r = game.board.reticule.getRow();
 				int c = game.board.reticule.getCol();
@@ -127,10 +127,10 @@ public class Game extends JFrame {
 		board = new Board();
 		controlPanel = controlPanel();
 		add(board, BorderLayout.CENTER);
-		add(controlPanel, BorderLayout.EAST);
+		add(controlPanel, BorderLayout.SOUTH);
 		setTitle("Mustard Bubbles");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setSize(500, 800);
+		setSize(425, 925);
 		setVisible(true);
 		isRunning = false;
 		//stop.setEnabled(false);
@@ -139,7 +139,8 @@ public class Game extends JFrame {
 	}
 	private JPanel controlPanel() {
 		JPanel controlPanel = new JPanel();
-		controlPanel.setLayout(new GridLayout(0, 1));
+		controlPanel.setLayout(new GridLayout(1, 0));
+		//controlPanel.setSize(200, 800);
 		start = new JButton("Start");
 		stop = new JButton("Stop");
 		reset = new JButton("Reset");
@@ -153,6 +154,8 @@ public class Game extends JFrame {
 		timer = new JTextField("0");
 		timer.setEditable(false);
 		score.setEditable(false);
+		score.setBorder(new TitledBorder("Score: "));
+		timer.setBorder(new TitledBorder("Time Left: "));
 		scorePanel.setLayout(new GridLayout(0, 1));
 		scorePanel.add(score);
 		scorePanel.add(timer, BorderLayout.CENTER);
@@ -181,8 +184,8 @@ public class Game extends JFrame {
 			}else {
 				System.out.println("Not a button");
 			}
-			
+
 		}
-		
+
 	}
 }
