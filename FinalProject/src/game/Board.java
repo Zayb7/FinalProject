@@ -62,10 +62,10 @@ public class Board extends JPanel{
 	}
 
 	public void detectLinear() {
-		for (int row = 0; row < ROWS - 2; ++row) {
-			for (int col = 0; col < COLS - 2; ++col) {
+		for (int row = 0; row < ROWS; ++row) {
+			for (int col = 0; col < COLS; ++col) {
 				if (!bubbleBoard[row][col].isEmpty()) {
-					if (bubbleBoard[row][col].getBubbleColor().equals(bubbleBoard[row + 1][col].getBubbleColor()) && bubbleBoard[row + 1][col].getBubbleColor().equals(bubbleBoard[row + 2][col].getBubbleColor())) {
+					if (row + 2 < ROWS && bubbleBoard[row][col].getBubbleColor().equals(bubbleBoard[row + 1][col].getBubbleColor()) && bubbleBoard[row + 1][col].getBubbleColor().equals(bubbleBoard[row + 2][col].getBubbleColor())) {
 						System.out.println("Passing vertical");
 						System.out.println("Setting " + Integer.toString(row) + " " + Integer.toString(col) + " to empty.");
 						System.out.println("Setting " + Integer.toString(row+1) + " " +  Integer.toString(col) + " to empty.");
@@ -77,7 +77,7 @@ public class Board extends JPanel{
 						bubbleBoard[row + 1][col].setBubbleColor(Color.PINK);
 						bubbleBoard[row + 2][col].setBubbleColor(Color.PINK);
 					}
-					else if (bubbleBoard[row][col].getBubbleColor().equals(bubbleBoard[row][col + 1].getBubbleColor()) && bubbleBoard[row][col + 1].getBubbleColor().equals(bubbleBoard[row][col + 2].getBubbleColor())) {
+					else if (col + 2 < COLS && bubbleBoard[row][col].getBubbleColor().equals(bubbleBoard[row][col + 1].getBubbleColor()) && bubbleBoard[row][col + 1].getBubbleColor().equals(bubbleBoard[row][col + 2].getBubbleColor())) {
 						System.out.println("Passing horizontal");
 						System.out.println("Setting " + Integer.toString(row) + " " + Integer.toString(col) + " to empty.");
 						System.out.println("Setting " + Integer.toString(row) + " " +  Integer.toString(col+1) + " to empty.");
