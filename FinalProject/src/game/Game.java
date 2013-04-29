@@ -34,13 +34,17 @@ public class Game extends JFrame {
 		im.put(KeyStroke.getKeyStroke(KeyEvent.VK_LEFT, 0), "LeftArrow");
 		im.put(KeyStroke.getKeyStroke(KeyEvent.VK_UP, 0), "UpArrow");
 		im.put(KeyStroke.getKeyStroke(KeyEvent.VK_DOWN, 0), "DownArrow");
+		im.put(KeyStroke.getKeyStroke(KeyEvent.VK_B, 0), "SpaceTheFinalFrontier");
 
 		am.put("RightArrow", game.new KeyboardAction("RightArrow", game));
 		am.put("LeftArrow", game.new KeyboardAction("LeftArrow", game));
 		am.put("UpArrow", game.new KeyboardAction("UpArrow", game));
 		am.put("DownArrow", game.new KeyboardAction("DownArrow", game));
+		am.put("SpaceTheFinalFrontier", game.new KeyboardAction("BPress", game));
 		
 		while (true) {
+			game.board.detectLinear();
+			game.board.fallMaster();
 			game.repaint();
 		}
 	}
@@ -68,6 +72,11 @@ public class Game extends JFrame {
 			}
 			else if (cmd.equalsIgnoreCase("DownArrow")) {
 				game.board.reticule.move(Direction.DOWN);
+			}
+			else if (cmd.equalsIgnoreCase("BPress")) {
+				int r = game.board.reticule.getRow();
+				int c = game.board.reticule.getCol();
+				game.board.swap(game.board.getBubbleAt(r, c), game.board.getBubbleAt(r, c + 1));
 			}
 		}
 
