@@ -101,7 +101,37 @@ public class Board extends JPanel{
 		for (int row = 0; row < ROWS; ++row) {
 			for (int col = 0; col < COLS; ++col) {
 				if (!bubbleBoard[row][col].isEmpty()) {
-					if (row + 2 < ROWS && bubbleBoard[row][col].getBubbleColor().equals(bubbleBoard[row + 1][col].getBubbleColor()) && bubbleBoard[row + 1][col].getBubbleColor().equals(bubbleBoard[row + 2][col].getBubbleColor())) {
+					if (row + 3 < ROWS && bubbleBoard[row][col].getBubbleColor().equals(bubbleBoard[row + 1][col].getBubbleColor()) && bubbleBoard[row + 1][col].getBubbleColor().equals(bubbleBoard[row + 2][col].getBubbleColor()) && bubbleBoard[row + 2][col].getBubbleColor().equals(bubbleBoard[row + 3][col].getBubbleColor())) {
+						bubbleBoard[row][col].setEmpty(true);
+						bubbleBoard[row + 1][col].setEmpty(true);
+						bubbleBoard[row + 2][col].setEmpty(true);
+						bubbleBoard[row + 3][col].setEmpty(true);
+						bubbleBoard[row][col].setBubbleColor(Color.BLACK);
+						bubbleBoard[row + 1][col].setBubbleColor(Color.BLACK);
+						bubbleBoard[row + 2][col].setBubbleColor(Color.BLACK);
+						bubbleBoard[row + 3][col].setBubbleColor(Color.BLACK);
+						popped = true;
+
+						if (gameStart) {
+							this.calculateScore();
+							this.calculateScore();
+						}
+					} else if (col + 3 < COLS && bubbleBoard[row][col].getBubbleColor().equals(bubbleBoard[row][col + 1].getBubbleColor()) && bubbleBoard[row][col + 1].getBubbleColor().equals(bubbleBoard[row][col + 2].getBubbleColor()) &&bubbleBoard[row][col + 2].getBubbleColor().equals(bubbleBoard[row][col + 3].getBubbleColor())) {
+						bubbleBoard[row][col].setEmpty(true);
+						bubbleBoard[row][col + 1].setEmpty(true);
+						bubbleBoard[row][col + 2].setEmpty(true);
+						bubbleBoard[row][col + 3].setEmpty(true);
+						bubbleBoard[row][col].setBubbleColor(Color.BLACK);
+						bubbleBoard[row][col + 1].setBubbleColor(Color.BLACK);
+						bubbleBoard[row][col + 2].setBubbleColor(Color.BLACK);
+						bubbleBoard[row][col + 3].setBubbleColor(Color.BLACK);
+						popped = true;
+						
+						if (gameStart) {
+							this.calculateScore();
+							this.calculateScore();
+						}
+					} else if (row + 2 < ROWS && bubbleBoard[row][col].getBubbleColor().equals(bubbleBoard[row + 1][col].getBubbleColor()) && bubbleBoard[row + 1][col].getBubbleColor().equals(bubbleBoard[row + 2][col].getBubbleColor())) {
 						bubbleBoard[row][col].setEmpty(true);
 						bubbleBoard[row + 1][col].setEmpty(true);
 						bubbleBoard[row + 2][col].setEmpty(true);
