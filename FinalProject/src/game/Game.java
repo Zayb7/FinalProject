@@ -55,13 +55,15 @@ public class Game extends JFrame {
 		im.put(KeyStroke.getKeyStroke(KeyEvent.VK_LEFT, 0), "LeftArrow");
 		im.put(KeyStroke.getKeyStroke(KeyEvent.VK_UP, 0), "UpArrow");
 		im.put(KeyStroke.getKeyStroke(KeyEvent.VK_DOWN, 0), "DownArrow");
-		im.put(KeyStroke.getKeyStroke(KeyEvent.VK_B, 0), "SpaceTheFinalFrontier");
+		im.put(KeyStroke.getKeyStroke(KeyEvent.VK_C, 0), "SpaceTheFinalFrontier");
+		im.put(KeyStroke.getKeyStroke(KeyEvent.VK_V, 0), "Shift");
 
 		am.put("RightArrow", game.new KeyboardAction("RightArrow", game));
 		am.put("LeftArrow", game.new KeyboardAction("LeftArrow", game));
 		am.put("UpArrow", game.new KeyboardAction("UpArrow", game));
 		am.put("DownArrow", game.new KeyboardAction("DownArrow", game));
 		am.put("SpaceTheFinalFrontier", game.new KeyboardAction("BPress", game));
+		am.put("Shift", game.new KeyboardAction("Shift", game));
 	}
 	
 
@@ -103,25 +105,28 @@ public class Game extends JFrame {
 		public void actionPerformed(ActionEvent arg0) {
 			if (cmd.equalsIgnoreCase("LeftArrow")) {
 				game.board.reticule.move(Direction.LEFT);
-				//System.out.println("LEFT");
 			}
 			else if (cmd.equalsIgnoreCase("UpArrow")) {
 				game.board.reticule.move(Direction.UP);
 			}
 			else if (cmd.equalsIgnoreCase("DownArrow")) {
 				game.board.reticule.move(Direction.DOWN);
-				//System.out.println("DOWN");
 			}
 			else if (cmd.equalsIgnoreCase("RightArrow")) {
 				game.board.reticule.move(Direction.RIGHT);
-				//System.out.println("RIGHT");
 			}
 			
 			else if (cmd.equalsIgnoreCase("BPress")) {
 				int r = game.board.reticule.getRow();
 				int c = game.board.reticule.getCol();
-				game.board.swap(game.board.getBubbleAt(r, c), game.board.getBubbleAt(r, c + 1));
+				if (game.board.reticule.isHoriz()) {
+					game.board.swap(game.board.getBubbleAt(r, c), game.board.getBubbleAt(r, c + 1));
+				} else {
+					game.board.swap(game.board.getBubbleAt(r, c), game.board.getBubbleAt(r + 1, c));
+				}
 				game.gameStart = true;
+			} else if (cmd.equalsIgnoreCase("Shift")) {
+				game.board.reticule.toggleHorizontal();
 			}
 		}
 
@@ -150,6 +155,10 @@ public class Game extends JFrame {
 		start.addActionListener(new ButtonListener());
 		stop.addActionListener(new ButtonListener());
 		epilepsyButton.addActionListener(new ButtonListener());
+//		start.setFocusable(false);
+//		stop.setFocusable(false);
+//		epilepsyButton.setFocusable(false);
+		
 		
 		
 		

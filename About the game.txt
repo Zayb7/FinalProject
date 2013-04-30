@@ -1,0 +1,14 @@
+Mustard Bubbles
+
+By Matt Bailey, Ross Bunker, David Hunter, Michael Kuzminski, and Hunter Lang
+
+
+Instructions:
+
+	Score as many points as possible! 3 in a row is worth 100 points, and 4 in a row is worth 300 points. Go for big combos.
+
+
+Controls:
+
+	V: Toggle cursor orientation
+	C: Swap for combos!
