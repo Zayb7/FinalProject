@@ -14,12 +14,14 @@ import javax.swing.JPanel;
 public class Board extends JPanel{
 	// variables
 	private Bubble[][] bubbleBoard;
-	private static int ROWS = 15;
-	private static int COLS = 8;
+	private static int ROWS = 12;
+	private static int COLS = 7;
 	// Will be set based upon timer
 	private boolean end;
 	public Reticule reticule;
 	private int score;
+	private boolean epilepsy = false;
+
 
 	// methods
 	public Board(boolean isRandom) {
@@ -82,7 +84,12 @@ public class Board extends JPanel{
 	}
 	@Override
 	public void paintComponent(Graphics g) {
-		g.setColor(Color.GRAY);
+		Random rng = new Random();
+		if (epilepsy) {
+			g.setColor(new Color(rng.nextInt(256), rng.nextInt(256), rng.nextInt(256)));
+		} else {
+			g.setColor(Color.GRAY);
+		}
 		g.fillRect(0, 0, 5000, 5000);
 		for (int i = 0; i < ROWS; i++) {
 			for (int j = 0; j < COLS; j++) {
@@ -115,6 +122,8 @@ public class Board extends JPanel{
 						if (gameStart) {
 							this.calculateScore();
 							this.calculateScore();
+							this.calculateScore();
+
 						}
 					} else if (col + 3 < COLS && bubbleBoard[row][col].getBubbleColor().equals(bubbleBoard[row][col + 1].getBubbleColor()) && bubbleBoard[row][col + 1].getBubbleColor().equals(bubbleBoard[row][col + 2].getBubbleColor()) &&bubbleBoard[row][col + 2].getBubbleColor().equals(bubbleBoard[row][col + 3].getBubbleColor())) {
 						bubbleBoard[row][col].setEmpty(true);
@@ -128,6 +137,7 @@ public class Board extends JPanel{
 						popped = true;
 						
 						if (gameStart) {
+							this.calculateScore();
 							this.calculateScore();
 							this.calculateScore();
 						}
@@ -242,5 +252,12 @@ public class Board extends JPanel{
 	public Bubble[][] getBubbleBoard() {
 		return bubbleBoard;
 	}
+	
+	public boolean isEpilepsy() {
+		return epilepsy;
+	}
 
+	public void setEpilepsy(boolean epilepsy) {
+		this.epilepsy = epilepsy;
+	}
 }

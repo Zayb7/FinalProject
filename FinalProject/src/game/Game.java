@@ -28,6 +28,7 @@ public class Game extends JFrame {
 	private static JButton start;
 	private JButton stop;
 	private JButton reset;
+	private JButton epilepsyButton;
 	public static JTextField score;
 	public static JTextField timer;
 	public boolean gameStart = false;
@@ -133,7 +134,7 @@ public class Game extends JFrame {
 		add(controlPanel, BorderLayout.SOUTH);
 		setTitle("Mustard Bubbles");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setSize(420, 860);
+		setSize(370, 755);
 		setVisible(true);
 		isRunning = false;
 		//stop.setEnabled(false);
@@ -145,10 +146,15 @@ public class Game extends JFrame {
 		controlPanel.setLayout(new GridLayout(1, 0));
 		start = new JButton("Start");
 		stop = new JButton("Stop");
+		epilepsyButton = new JButton("Epilepsy?");
 		start.addActionListener(new ButtonListener());
 		stop.addActionListener(new ButtonListener());
-
-
+		epilepsyButton.addActionListener(new ButtonListener());
+		
+		
+		
+		JPanel holderPanel = new JPanel();
+		holderPanel.setLayout(new GridLayout(0,1));
 		JPanel scorePanel = new JPanel();
 		score = new JTextField("Score");
 		timer = new JTextField("0");
@@ -163,7 +169,9 @@ public class Game extends JFrame {
 		scorePanel.setBorder(new TitledBorder(new EtchedBorder(), "Score:       Time: "));
 		controlPanel.add(start);
 		controlPanel.add(stop);
-		controlPanel.add(scorePanel);
+		holderPanel.add(scorePanel);
+		holderPanel.add(epilepsyButton);
+		controlPanel.add(holderPanel);
 		controlPanel.setBorder(new TitledBorder(new EtchedBorder(), "Controls"));
 
 
@@ -182,7 +190,11 @@ public class Game extends JFrame {
 				isRunning = false;
 				start.setEnabled(true);
 			}else {
-				System.out.println("Not a button");
+				if (board.isEpilepsy()) {
+					board.setEpilepsy(false);
+				} else {
+					board.setEpilepsy(true);
+				}
 			}
 			
 		}

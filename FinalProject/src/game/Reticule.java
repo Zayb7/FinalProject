@@ -8,8 +8,8 @@ import java.util.Random;
 
 public class Reticule {
 	// Constants
-	static final int ROWS = 15;
-	static final int COLS = 8;
+	static final int ROWS = 12;
+	static final int COLS = 7;
 	static final int SIZE = 50;
 	private int row, col;
 	public enum Direction {
