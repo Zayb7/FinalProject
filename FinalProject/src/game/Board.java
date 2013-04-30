@@ -91,13 +91,14 @@ public class Board extends JPanel{
 			}
 		}
 		reticule.draw(g);
-		long time1 = System.currentTimeMillis();
-		while (time1 + 70 > System.currentTimeMillis()) {
-			//repeat loop until time condition is met. timer is set by adding a millisecond value to time1
-		}
+//		long time1 = System.currentTimeMillis();
+//		while (time1 + 70 > System.currentTimeMillis()) {
+//			//repeat loop until time condition is met. timer is set by adding a millisecond value to time1
+//		}
 	}
 
 	public void detectLinear(boolean gameStart) {
+		boolean popped = false;
 		for (int row = 0; row < ROWS; ++row) {
 			for (int col = 0; col < COLS; ++col) {
 				if (!bubbleBoard[row][col].isEmpty()) {
@@ -109,14 +110,9 @@ public class Board extends JPanel{
 						bubbleBoard[row + 1][col].setBubbleColor(Color.BLACK);
 						bubbleBoard[row + 2][col].setBubbleColor(Color.BLACK);
 
+
 						if (gameStart) {
 							this.calculateScore();
-							try {
-								Thread.sleep(500);  
-							} catch (InterruptedException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							}
 						}
 					}
 					else if (col + 2 < COLS && bubbleBoard[row][col].getBubbleColor().equals(bubbleBoard[row][col + 1].getBubbleColor()) && bubbleBoard[row][col + 1].getBubbleColor().equals(bubbleBoard[row][col + 2].getBubbleColor())) {
@@ -127,17 +123,20 @@ public class Board extends JPanel{
 						bubbleBoard[row][col + 1].setBubbleColor(Color.BLACK);
 						bubbleBoard[row][col + 2].setBubbleColor(Color.BLACK);
 
+
 						if (gameStart) {
 							this.calculateScore();
-							try {
-								Thread.sleep(500);  
-							} catch (InterruptedException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							}
 						}
 					}
 				}
+			}
+		}
+		if(popped){
+			try {
+				Thread.sleep(500);  
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 		}
 	}
@@ -165,7 +164,6 @@ public class Board extends JPanel{
 		for (int j = ROWS - 1; j >= 0; j--) {
 			for(int i = 0; i < COLS; i++) {
 				fallHelper(bubbleBoard[j][i], j, i);
-
 			}
 		}
 
@@ -193,11 +191,11 @@ public class Board extends JPanel{
 	public int getScore() {
 		return score;
 	}
-	
+
 	public static int getRows() {
 		return ROWS;
 	}
-	
+
 	public static void setRows(int rOWS) {
 		ROWS = rOWS;
 	}
@@ -205,7 +203,7 @@ public class Board extends JPanel{
 	public static int getCols() {
 		return COLS;
 	}
-	
+
 	public static void setCols(int cOLS) {
 		COLS = cOLS;
 	}
@@ -218,5 +216,5 @@ public class Board extends JPanel{
 	public Bubble[][] getBubbleBoard() {
 		return bubbleBoard;
 	}
-	
+
 }

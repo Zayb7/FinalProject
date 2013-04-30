@@ -133,7 +133,7 @@ public class Game extends JFrame {
 		add(controlPanel, BorderLayout.SOUTH);
 		setTitle("Mustard Bubbles");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setSize(425, 925);
+		setSize(420, 860);
 		setVisible(true);
 		isRunning = false;
 		//stop.setEnabled(false);
