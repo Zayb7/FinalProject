@@ -33,7 +33,7 @@ public class Game extends JFrame {
 	public boolean gameStart = false;
 	private static boolean isRunning;
 	private static boolean justStarted;
-	private static final long GAME_LENGTH = 10;
+	private static final long GAME_LENGTH = 100;
 	private static long startTime;
 	
 	public static void main(String[] args) {
@@ -158,7 +158,6 @@ public class Game extends JFrame {
 		scorePanel.add(score);
 		scorePanel.add(timer, BorderLayout.CENTER);
 		scorePanel.setBorder(new TitledBorder(new EtchedBorder(), "Score:       Time: "));
-
 		controlPanel.add(start);
 		controlPanel.add(stop);
 		controlPanel.add(scorePanel);
