@@ -5,6 +5,7 @@ import game.Reticule.Direction;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 
 import javax.swing.AbstractAction;
@@ -24,13 +25,25 @@ public class Game extends JFrame {
 	// Fields
 	public Board board;
 	private JPanel controlPanel;
-	public JTextField score;
+	private static JButton start;
+	private JButton stop;
+	private JButton reset;
+	public static JTextField score;
+	public static JTextField timer;
 	public boolean gameStart = false;
+	private static boolean isRunning;
+	private static boolean justStarted;
+	private static final long GAME_LENGTH = 10;
+	private static long startTime;
 	
 	public static void main(String[] args) {
 		Game game = new Game();
 		prepareMaps(game);
-		gameLoop(game);
+		startTime = System.currentTimeMillis()/1000;
+
+		while(true){
+			gameLoop(game);
+		}
 	}
 
 	private static void prepareMaps(Game game) {
@@ -52,11 +65,22 @@ public class Game extends JFrame {
 	
 
 	private static void gameLoop(Game game) {
-		while (true) {
+		while (isRunning) {
+			if (justStarted) {
+				game.board.setScore(0);
+				justStarted = false;
+			}
 			game.board.detectLinear(game.gameStart);
-			game.board.fall();
+			game.board.fallMaster();
 			game.score.setText(Integer.toString(game.board.getScore()));
+			game.timer.setText(Integer.toString((int) (GAME_LENGTH- (System.currentTimeMillis()/1000-startTime))));
+			//System.out.println(GAME_LENGTH- (System.currentTimeMillis()/1000-startTime));
 			game.repaint();
+			if ((startTime + GAME_LENGTH) <= System.currentTimeMillis()/1000) {
+				isRunning = false;
+				game.timer.setText("END!");
+				//start.setEnabled(true);
+			}
 		}
 	}
 
@@ -75,16 +99,20 @@ public class Game extends JFrame {
 		public void actionPerformed(ActionEvent arg0) {
 			if (cmd.equalsIgnoreCase("LeftArrow")) {
 				game.board.reticule.move(Direction.LEFT);
-			}
-			else if (cmd.equalsIgnoreCase("RightArrow")) {
-				game.board.reticule.move(Direction.RIGHT);
+				//System.out.println("LEFT");
 			}
 			else if (cmd.equalsIgnoreCase("UpArrow")) {
 				game.board.reticule.move(Direction.UP);
 			}
 			else if (cmd.equalsIgnoreCase("DownArrow")) {
 				game.board.reticule.move(Direction.DOWN);
+				//System.out.println("DOWN");
 			}
+			else if (cmd.equalsIgnoreCase("RightArrow")) {
+				game.board.reticule.move(Direction.RIGHT);
+				//System.out.println("RIGHT");
+			}
+			
 			else if (cmd.equalsIgnoreCase("BPress")) {
 				int r = game.board.reticule.getRow();
 				int c = game.board.reticule.getCol();
@@ -96,40 +124,66 @@ public class Game extends JFrame {
 	}
 
 	public Game(){
-		board = new Board();
+		board = new Board(true);
 		controlPanel = controlPanel();
 		add(board, BorderLayout.CENTER);
-		add(controlPanel, BorderLayout.EAST);
+		add(controlPanel, BorderLayout.SOUTH);
 		setTitle("Mustard Bubbles");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setSize(500, 750);
+		setSize(425, 925);
 		setVisible(true);
+		isRunning = false;
+		//stop.setEnabled(false);
+
 
 	}
 	private JPanel controlPanel() {
 		JPanel controlPanel = new JPanel();
-		controlPanel.setLayout(new GridLayout(0, 1));
-		JButton start = new JButton("Start");
-		JButton stop = new JButton("Stop");
-		JButton reset = new JButton("Reset");
+		controlPanel.setLayout(new GridLayout(1, 0));
+		start = new JButton("Start");
+		stop = new JButton("Stop");
+		start.addActionListener(new ButtonListener());
+		stop.addActionListener(new ButtonListener());
+
 
 		JPanel scorePanel = new JPanel();
 		score = new JTextField("Score");
-		JTextField timer = new JTextField("0");
+		timer = new JTextField("0");
 		timer.setEditable(false);
 		score.setEditable(false);
-		scorePanel.setLayout(new GridLayout(0, 1));
+		//Why??
+		//score.setBorder(new TitledBorder("Score: "));
+		//timer.setBorder(new TitledBorder("Time Left: "));
+		scorePanel.setLayout(new GridLayout(1, 0));
 		scorePanel.add(score);
 		scorePanel.add(timer, BorderLayout.CENTER);
-		scorePanel.setBorder(new TitledBorder(new EtchedBorder(), "Info"));
+		scorePanel.setBorder(new TitledBorder(new EtchedBorder(), "Score:       Time: "));
 
 		controlPanel.add(start);
 		controlPanel.add(stop);
-		controlPanel.add(reset);
 		controlPanel.add(scorePanel);
 		controlPanel.setBorder(new TitledBorder(new EtchedBorder(), "Controls"));
 
 
 		return controlPanel;
+	}
+	private class ButtonListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			if (e.getSource().toString().contains("Start")) {
+				startTime = System.currentTimeMillis()/1000;
+				isRunning = true;
+				start.setEnabled(false);
+				justStarted = true;
+			} else if (e.getSource().toString().contains("Stop")) {
+				isRunning = false;
+				start.setEnabled(true);
+			}else {
+				System.out.println("Not a button");
+			}
+			
+		}
+		
 	}
 }

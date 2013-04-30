@@ -15,11 +15,18 @@ public class Bubble {
 
 	public Bubble(int r, int c){
 		Random rng = new Random();
-		int randColorInt = rng.nextInt(9);
+		int randColorInt = rng.nextInt(6);
 		row = r;
 		col = c;
 		isEmpty = false;
 		setBubbleColor(Integer.toString(randColorInt));
+	}
+	
+	public Bubble(int row, int col, boolean isEmpty, Color bubbleColor){
+		this.row = row;
+		this.col = col;
+		this.isEmpty = isEmpty;
+		this.bubbleColor = bubbleColor;
 	}
 
 	public boolean colorEquals(Bubble that) {
@@ -32,11 +39,18 @@ public class Bubble {
 	public int getRow() {
 		return row;
 	}
+	
+	public void setRow(int row) {
+		this.row = row;
+	}
 
 	public int getCol() {
 		return col;
 	}
 	
+	public void setCol(int col) {
+		this.col = col;
+	}
 	public Color getBubbleColor() {
 		return bubbleColor;
 	}
@@ -47,6 +61,15 @@ public class Bubble {
 
 	public void setBubbleColor(String bubbleChar) {
 		switch (bubbleChar) {
+		case ("R"):
+			bubbleColor = Color.RED;
+			break;
+		case ("B"):
+			bubbleColor = Color.BLUE;
+			break;
+		case ("G"):
+			bubbleColor = Color.GREEN;
+			break;
 		case ("0"):
 			bubbleColor = new Color(255,0,0);
 		break;
@@ -57,22 +80,13 @@ public class Bubble {
 			bubbleColor = new Color(0,0,255);
 		break;
 		case ("3"):
-			bubbleColor = new Color(255,255,255);
-		break;
-		case ("4"):
-			bubbleColor = new Color(0,0,0);
-		break;
-		case ("5"):
-			bubbleColor = Color.DARK_GRAY;
-		break;
-		case ("6"):
 			bubbleColor = Color.CYAN;
 		break;
-		case ("7"):
-			bubbleColor = Color.YELLOW;
-		break;
-		case ("8"):
+		case ("4"):
 			bubbleColor = Color.MAGENTA;
+		break;
+		case ("5"):
+			bubbleColor = Color.YELLOW;
 		break;
 		default:
 			System.out.println("That's not a color.");
