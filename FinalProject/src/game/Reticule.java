@@ -4,6 +4,7 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.util.Random;
 
 public class Reticule {
 	// Constants
@@ -18,10 +19,16 @@ public class Reticule {
 		row = col = 0;
 	}
 	public void draw(Graphics g){
+		Random rng = new Random();
+		int widthRand = (int) (Math.random()*100)%8;
+		int heightRand = (int) (Math.random()*100)%8;
 		Graphics2D g2d = (Graphics2D) g;
-		g2d.setStroke(new BasicStroke(3));
-		g2d.setColor(Color.MAGENTA);
-		g2d.drawRect(col * SIZE, row * SIZE, SIZE * 2, SIZE);
+		g2d.setStroke(new BasicStroke(8));
+		g2d.setColor(Color.ORANGE);
+		g2d.drawRect(col * SIZE - widthRand/2, row * SIZE - heightRand/2, SIZE * 2 + widthRand, SIZE + heightRand);
+		g2d.setStroke(new BasicStroke(4));
+		g2d.setColor(Color.BLACK);
+		g2d.drawRect(col * SIZE - widthRand/2 - 4, row * SIZE - heightRand/2 - 4, SIZE * 2 + widthRand + 8, SIZE + heightRand + 8);
 	}
 	public void move(Direction d) {
 		switch (d) {

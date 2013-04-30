@@ -140,8 +140,6 @@ public class Bubble {
 		Random rng = new Random();
 		int widthRand = (int) (Math.random()*100)%8;
 		int heightRand = (int) (Math.random()*100)%8;
-//		int widthRand = rng.nextInt(10);
-//		int heightRand = rng.nextInt(10);
 		Graphics2D g2d = (Graphics2D) g;
 		g2d.setColor(bubbleColor);
 		g2d.fillOval((col * BUBBLE_SIZE) - widthRand/2, (row * BUBBLE_SIZE) - heightRand, BUBBLE_SIZE + widthRand, BUBBLE_SIZE + heightRand);
@@ -149,6 +147,6 @@ public class Bubble {
 		g2d.setStroke(new BasicStroke(5));
 		g2d.drawOval((col * BUBBLE_SIZE) - widthRand/2, (row * BUBBLE_SIZE) - heightRand, BUBBLE_SIZE + widthRand, BUBBLE_SIZE + heightRand);
 		g2d.setColor(Color.WHITE);
-		g2d.fillOval((col * BUBBLE_SIZE) + 13- widthRand/2, (row * BUBBLE_SIZE) + 10 - heightRand, 10 + widthRand/*rng.nextInt(5)*/, 7 + heightRand/*rng.nextInt(5)*/);
+		g2d.fillOval((col * BUBBLE_SIZE) + 13- widthRand/2, (row * BUBBLE_SIZE) + 10 - heightRand, 10 + /*widthRand*/rng.nextInt(5), 7 + /*heightRand*/rng.nextInt(5));
 	}
 }

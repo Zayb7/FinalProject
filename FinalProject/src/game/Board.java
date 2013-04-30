@@ -20,7 +20,6 @@ public class Board extends JPanel{
 	private boolean end;
 	public Reticule reticule;
 	private int score;
-	private static final boolean epilepsyMode = true;
 
 	// methods
 	public Board(boolean isRandom) {
@@ -91,10 +90,10 @@ public class Board extends JPanel{
 			}
 		}
 		reticule.draw(g);
-//		long time1 = System.currentTimeMillis();
-//		while (time1 + 70 > System.currentTimeMillis()) {
-//			//repeat loop until time condition is met. timer is set by adding a millisecond value to time1
-//		}
+		long time1 = System.currentTimeMillis();
+		while (time1 + 70 > System.currentTimeMillis()) {
+			//repeat loop until time condition is met. timer is set by adding a millisecond value to time1
+		}
 	}
 
 	public void detectLinear(boolean gameStart) {
@@ -109,21 +108,20 @@ public class Board extends JPanel{
 						bubbleBoard[row][col].setBubbleColor(Color.BLACK);
 						bubbleBoard[row + 1][col].setBubbleColor(Color.BLACK);
 						bubbleBoard[row + 2][col].setBubbleColor(Color.BLACK);
-
+						popped = true;
 
 						if (gameStart) {
 							this.calculateScore();
 						}
-					}
-					else if (col + 2 < COLS && bubbleBoard[row][col].getBubbleColor().equals(bubbleBoard[row][col + 1].getBubbleColor()) && bubbleBoard[row][col + 1].getBubbleColor().equals(bubbleBoard[row][col + 2].getBubbleColor())) {
+					} else if (col + 2 < COLS && bubbleBoard[row][col].getBubbleColor().equals(bubbleBoard[row][col + 1].getBubbleColor()) && bubbleBoard[row][col + 1].getBubbleColor().equals(bubbleBoard[row][col + 2].getBubbleColor())) {
 						bubbleBoard[row][col].setEmpty(true);
 						bubbleBoard[row][col + 1].setEmpty(true);
 						bubbleBoard[row][col + 2].setEmpty(true);
 						bubbleBoard[row][col].setBubbleColor(Color.BLACK);
 						bubbleBoard[row][col + 1].setBubbleColor(Color.BLACK);
 						bubbleBoard[row][col + 2].setBubbleColor(Color.BLACK);
-
-
+						popped = true;
+						
 						if (gameStart) {
 							this.calculateScore();
 						}
@@ -131,9 +129,10 @@ public class Board extends JPanel{
 				}
 			}
 		}
+		
 		if(popped){
 			try {
-				Thread.sleep(500);  
+				Thread.sleep(400);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -176,9 +175,6 @@ public class Board extends JPanel{
 		}
 	}
 
-	public void checkEnd() {
-
-	}
 
 	public void calculateScore() {
 		score += 100; 
