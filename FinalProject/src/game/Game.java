@@ -70,16 +70,19 @@ public class Game extends JFrame {
 				game.board.setScore(0);
 				justStarted = false;
 			}
+//			
 			game.board.detectLinear(game.gameStart);
 			game.board.fallMaster();
 			game.score.setText(Integer.toString(game.board.getScore()));
 			game.timer.setText(Integer.toString((int) (GAME_LENGTH- (System.currentTimeMillis()/1000-startTime))));
 			//System.out.println(GAME_LENGTH- (System.currentTimeMillis()/1000-startTime));
 			game.repaint();
+			
 			if ((startTime + GAME_LENGTH) <= System.currentTimeMillis()/1000) {
 				isRunning = false;
 				game.timer.setText("END!");
 				//start.setEnabled(true);
+				
 			}
 		}
 	}

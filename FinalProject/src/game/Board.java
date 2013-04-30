@@ -20,6 +20,7 @@ public class Board extends JPanel{
 	private boolean end;
 	public Reticule reticule;
 	private int score;
+	private static final boolean epilepsyMode = true;
 
 	// methods
 	public Board(boolean isRandom) {
@@ -90,6 +91,10 @@ public class Board extends JPanel{
 			}
 		}
 		reticule.draw(g);
+		long time1 = System.currentTimeMillis();
+		while (time1 + 70 > System.currentTimeMillis()) {
+			//repeat loop until time condition is met. timer is set by adding a millisecond value to time1
+		}
 	}
 
 	public void detectLinear(boolean gameStart) {
@@ -100,9 +105,9 @@ public class Board extends JPanel{
 						bubbleBoard[row][col].setEmpty(true);
 						bubbleBoard[row + 1][col].setEmpty(true);
 						bubbleBoard[row + 2][col].setEmpty(true);
-						bubbleBoard[row][col].setBubbleColor(Color.PINK);
-						bubbleBoard[row + 1][col].setBubbleColor(Color.PINK);
-						bubbleBoard[row + 2][col].setBubbleColor(Color.PINK);
+						bubbleBoard[row][col].setBubbleColor(Color.BLACK);
+						bubbleBoard[row + 1][col].setBubbleColor(Color.BLACK);
+						bubbleBoard[row + 2][col].setBubbleColor(Color.BLACK);
 
 						if (gameStart) {
 							this.calculateScore();
@@ -118,9 +123,9 @@ public class Board extends JPanel{
 						bubbleBoard[row][col].setEmpty(true);
 						bubbleBoard[row][col + 1].setEmpty(true);
 						bubbleBoard[row][col + 2].setEmpty(true);
-						bubbleBoard[row][col].setBubbleColor(Color.PINK);
-						bubbleBoard[row][col + 1].setBubbleColor(Color.PINK);
-						bubbleBoard[row][col + 2].setBubbleColor(Color.PINK);
+						bubbleBoard[row][col].setBubbleColor(Color.BLACK);
+						bubbleBoard[row][col + 1].setBubbleColor(Color.BLACK);
+						bubbleBoard[row][col + 2].setBubbleColor(Color.BLACK);
 
 						if (gameStart) {
 							this.calculateScore();
