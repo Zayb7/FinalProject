@@ -93,6 +93,7 @@ public class Board extends JPanel{
 	}
 
 	public void detectLinear(boolean gameStart) {
+		boolean popped = false;
 		for (int row = 0; row < ROWS; ++row) {
 			for (int col = 0; col < COLS; ++col) {
 				if (!bubbleBoard[row][col].isEmpty()) {
@@ -103,15 +104,9 @@ public class Board extends JPanel{
 						bubbleBoard[row][col].setBubbleColor(Color.PINK);
 						bubbleBoard[row + 1][col].setBubbleColor(Color.PINK);
 						bubbleBoard[row + 2][col].setBubbleColor(Color.PINK);
-
+						popped = true;
 						if (gameStart) {
 							this.calculateScore();
-							try {
-								Thread.sleep(500);  
-							} catch (InterruptedException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							}
 						}
 					}
 					else if (col + 2 < COLS && bubbleBoard[row][col].getBubbleColor().equals(bubbleBoard[row][col + 1].getBubbleColor()) && bubbleBoard[row][col + 1].getBubbleColor().equals(bubbleBoard[row][col + 2].getBubbleColor())) {
@@ -121,18 +116,20 @@ public class Board extends JPanel{
 						bubbleBoard[row][col].setBubbleColor(Color.PINK);
 						bubbleBoard[row][col + 1].setBubbleColor(Color.PINK);
 						bubbleBoard[row][col + 2].setBubbleColor(Color.PINK);
-
+						popped = true;
 						if (gameStart) {
 							this.calculateScore();
-							try {
-								Thread.sleep(500);  
-							} catch (InterruptedException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							}
 						}
 					}
 				}
+			}
+		}
+		if(popped){
+			try {
+				Thread.sleep(500);  
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 		}
 	}
@@ -160,7 +157,6 @@ public class Board extends JPanel{
 		for (int j = ROWS - 1; j >= 0; j--) {
 			for(int i = 0; i < COLS; i++) {
 				fallHelper(bubbleBoard[j][i], j, i);
-
 			}
 		}
 
@@ -188,11 +184,11 @@ public class Board extends JPanel{
 	public int getScore() {
 		return score;
 	}
-	
+
 	public static int getRows() {
 		return ROWS;
 	}
-	
+
 	public static void setRows(int rOWS) {
 		ROWS = rOWS;
 	}
@@ -200,7 +196,7 @@ public class Board extends JPanel{
 	public static int getCols() {
 		return COLS;
 	}
-	
+
 	public static void setCols(int cOLS) {
 		COLS = cOLS;
 	}
@@ -213,5 +209,5 @@ public class Board extends JPanel{
 	public Bubble[][] getBubbleBoard() {
 		return bubbleBoard;
 	}
-	
+
 }
